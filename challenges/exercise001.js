@@ -6,7 +6,7 @@ function capitalize(word) {
    */
   if (word === undefined) throw new Error("word is required");
 
-  if(word.length == 0)  return word;                                    // if the string is empty, do nothing
+  if (word.length == 0) return word;                                    // if the string is empty, do nothing
 
   return word.charAt(0).toUpperCase() + word.slice(1, word.length);     // first char=>upper case, then merge rest of word
 }
@@ -24,11 +24,11 @@ function generateInitials(firstName, lastName, format = initialsFormat.APPEASE_T
 
   let initials = [];
 
-  if( firstName.length != 0) {                                  // if the firstname is empty, skip it
+  if (firstName.length != 0) {                                  // if the firstname is empty, skip it
 
     let firstInitial = firstName.charAt(0).toUpperCase();       // seperate and uppercase the initial [NB: CHECK IF DESIERED!]
 
-    switch(format) {                                           // handle different formats [EXT: add more cases as required]
+    switch (format) {                                           // handle different formats [EXT: add more cases as required]
 
       case initialsFormat.INFORMAL:
       case initialsFormat.APPEASE_TEST:                         // Both informal and the test, wants a period on the first initial
@@ -41,20 +41,20 @@ function generateInitials(firstName, lastName, format = initialsFormat.APPEASE_T
     }
 
     initials.push(firstInitial);
-    
+
   }
 
-  if( lastName.length != 0) {                                   // if lastName empty, skip it            
+  if (lastName.length != 0) {                                   // if lastName empty, skip it            
 
     let lastInitial = lastName.charAt(0).toUpperCase();         // seperate and uppercase the initial [NB: CHECK IF DESIRED!]
 
-    switch(format)                                              // handle different formats [EXT: add more cases as required]
+    switch (format)                                              // handle different formats [EXT: add more cases as required]
     {
       case initialsFormat.INFORMAL:                             // Only informal wants a period on the last initial
         lastInitial += ".";
         break;
 
-      default: 
+      default:
         // do nothing
         break;
     }
@@ -63,13 +63,13 @@ function generateInitials(firstName, lastName, format = initialsFormat.APPEASE_T
 
   }
 
-    return initials.join("");
+  return initials.join("");
 }
 
 function addVAT(originalPrice, vatRate) {
   if (originalPrice === undefined) throw new Error("originalPrice is requied");
   if (vatRate === undefined) throw new Error("vatRate is required");
-  
+
   let priceInPence = originalPrice * 100;                         // convert to pence as that is our lowest possible unit
   let vatMultiplier = vatRate / 100;                              // vatRate to percentage multiplier
   let vatCost = priceInPence * vatMultiplier;
@@ -83,12 +83,12 @@ function getSalePrice(originalPrice, reduction) {
   if (originalPrice === undefined) throw new Error("originalPrice is required");
   if (reduction === undefined) throw new Error("reduction is required");
 
-  if(reduction < 0) throw new Error("reduction cannot be negative. Try profiteer(price, increase)");
-  
+  if (reduction < 0) throw new Error("reduction cannot be negative. Try profiteer(price, increase)");
+
   let priceInPence = originalPrice * 100;                         // convert to pence as that is our lowest possible unit
   let reductionMultiplier = reduction / 100;                      // reduction to percentage multiplier
-  let reductionValue = priceInPence * reductionMultiplier;        
-  let reducedPrice = Math.round( priceInPence - reductionValue ); // calc the reduction amount, rounding to nearest penny
+  let reductionValue = priceInPence * reductionMultiplier;
+  let reducedPrice = Math.round(priceInPence - reductionValue); // calc the reduction amount, rounding to nearest penny
 
   return reducedPrice / 100;                                      // convert back to original pound format ( max 2 dp as vatPrice is an int )
 }
@@ -117,16 +117,16 @@ function getMiddleCharacter(str) {
   */
 
 
- if (str === undefined) throw new Error("str is required");
- if( str.length == 0) throw new Error("str cannot be empty")
+  if (str === undefined) throw new Error("str is required");
+  if (str.length == 0) throw new Error("str cannot be empty")
 
- let midPos = str.length / 2;                            // find the middle position
+  let midPos = str.length / 2;                            // find the middle position
 
- let bottomLimit = Math.floor( midPos - 0.5 );           // calc previous integer (simplified as we can be sure of the input)        
- let topLimit = Math.floor( midPos + 1);                // calc next integer (simplified as we can be sure of the input) 
- 
+  let bottomLimit = Math.floor(midPos - 0.5);           // calc previous integer (simplified as we can be sure of the input)        
+  let topLimit = Math.floor(midPos + 1);                // calc next integer (simplified as we can be sure of the input) 
 
- return str.slice(bottomLimit, topLimit );               // return only the middle section
+
+  return str.slice(bottomLimit, topLimit);               // return only the middle section
 }
 
 function reverseWord(word) {
@@ -153,7 +153,7 @@ function reverseWord(word) {
 
   // return wordArr.join("");                                // parse the array back into a string
   ////////////////////////////////////////////////////////////////////////////////////////
-  
+
   /**
    * REVERSE METHOD
    * Relient on .reverse() being optimised (which it probably is). Custom method could be faster.
@@ -164,8 +164,8 @@ function reverseWord(word) {
 
 function reverseAllWords(words) {
   if (words === undefined) throw new Error("words is required");
-  
-  return words.map( word => reverseWord(word));
+
+  return words.map(word => reverseWord(word));
 }
 
 // "ENUM" to store user OS types
@@ -180,8 +180,8 @@ function countLinuxUsers(users) {
 
   let linuxCount = 0;
 
-  for(let user of users) {                                    // iterate through each user
-    if( user.type === OS_TYPE.LINUX )   linuxCount++;         // increment upon finding a linux user
+  for (let user of users) {                                    // iterate through each user
+    if (user.type === OS_TYPE.LINUX) linuxCount++;         // increment upon finding a linux user
   }
 
   return linuxCount;
@@ -189,22 +189,22 @@ function countLinuxUsers(users) {
 
 function getMeanScore(scores) {
   if (scores === undefined) throw new Error("scores is required");
-  
+
   let total = 0;
 
-  for(let score of scores)                                    // calc the sum of all the scores
-    total += score;                                           
-  
-    return Math.round(total / scores.length * 100) / 100;     // average and round to 2 dp
+  for (let score of scores)                                    // calc the sum of all the scores
+    total += score;
+
+  return Math.round(total / scores.length * 100) / 100;     // average and round to 2 dp
 }
 
 function simpleFizzBuzz(n) {
   if (n === undefined) throw new Error("n is required");
-  
+
   let result = "";
 
-  if( !( n % 3 ) )  result += "fizz";                         // append if divisible by 3
-  if( !( n % 5 ) )  result += "buzz";                         // append if divisible by 5
+  if (!(n % 3)) result += "fizz";                         // append if divisible by 3
+  if (!(n % 5)) result += "buzz";                         // append if divisible by 5
 
   return (result == "") ? n : result;                         // if nothing has been appended, return the number, otherwise return the string
 }
