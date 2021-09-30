@@ -165,11 +165,7 @@ function reverseWord(word) {
 function reverseAllWords(words) {
   if (words === undefined) throw new Error("words is required");
   
-  let reversed = [];                                
-  for( let word of words )
-    reversed.push( reverseWord( word ) );
-
-  return reversed;
+  return words.map( word => reverseWord(word));
 }
 
 // "ENUM" to store user OS types
