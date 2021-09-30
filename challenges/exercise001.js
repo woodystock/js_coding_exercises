@@ -172,9 +172,23 @@ function reverseAllWords(words) {
   return reversed;
 }
 
+// "ENUM" to store user OS types
+const OS_TYPE = {
+  WINDOWS: "Windows",             // Classic
+  MAC: "Mac",                     // New Skool
+  LINUX: "Linux"                  // 1337
+}
+
 function countLinuxUsers(users) {
   if (users === undefined) throw new Error("users is required");
-  // Add your code here!
+
+  let linuxCount = 0;
+
+  for(let user of users) {                                    // iterate through each user
+    if( user.type === OS_TYPE.LINUX )   linuxCount++;         // increment upon finding a linux user
+  }
+
+  return linuxCount;
 }
 
 function getMeanScore(scores) {
