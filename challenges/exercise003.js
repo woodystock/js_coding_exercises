@@ -39,7 +39,12 @@ function checkIngredients(menu, ingredient) {
   if (menu === undefined) throw new Error("menu is required");
   if (!ingredient) throw new Error("ingredient is required");
   
-  
+  for(let item of menu) {                                             // iterate through each item
+    if(item.ingredients !== undefined)                                // make sure we avoid any reference errors
+      if(item.ingredients.indexOf(ingredient) != -1) return true;     // if we find the ingredient at any time, return
+  }
+
+  return false;                                                       // we made it through the menu without finding the ingredient... return false
 }
 
 function duplicateNumbers(arr1, arr2) {
