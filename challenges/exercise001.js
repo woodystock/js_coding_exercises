@@ -51,7 +51,7 @@ function generateInitials(firstName, lastName, format = initialsFormat.APPEASE_T
     switch(format)                                              // handle different formats [EXT: add more cases as required]
     {
       case initialsFormat.INFORMAL:                             // Only informal wants a period on the last initial
-        firstInitial += ".";
+        lastInitial += ".";
         break;
 
       default: 
