@@ -5,9 +5,19 @@ function getFillings(sandwich) {
   return ( sandwich.fillings == undefined ) ? [] : sandwich.fillings;
 }
 
+// "ENUM" for locations... consider a database instead, for external editing
+const LOCATIONS = {
+  MANCHESTER: "Manchester",
+  LEEDS: "Leeds",
+  LONDON: "London",
+  ONETT: "Onett"
+}
 function isFromManchester(person) {
   if (person === undefined) throw new Error("person is required");
-  // Your code here!
+  
+  // if the person has no city, then we cannot confirm they are from manchester or not so returns false
+  // [NB: Check if desired!]
+  return ( person.city === LOCATIONS.MANCHESTER );
 }
 
 function getBusNumbers(people) {
