@@ -10,10 +10,13 @@ function findSmallNums(nums) {
   // }
 
   // forEach
-  nums.forEach( function(num) {
-    if(num < 1)
-      result.push(num)
-  });
+  // nums.forEach( function(num) {
+  //   if(num < 1)
+  //     result.push(num)
+  // });
+
+  //optimum
+  result = nums.filter( num => num < 1);
 
   return result;
 }
@@ -31,10 +34,13 @@ function findNamesBeginningWith(names, char) {
   // }
 
   // forEach
-  names.forEach( function(name) {
-    if(name.startsWith(char))
-      result.push(name);
-  });
+  // names.forEach( function(name) {
+  //   if(name.startsWith(char))
+  //     result.push(name);
+  // });
+
+  // optimum
+  result = names.filter( name => name.startsWith(char));
 
   return result;
 }
@@ -44,7 +50,7 @@ function findVerbs(words) {
   
   let result = [];
 
-  const VERB_CHECK = "to "
+  const VERB_PREFIX = "to "
 
   // for loop
   // for(let i = 0; i < words.length; ++i) {
@@ -53,10 +59,13 @@ function findVerbs(words) {
   // }
 
   // forEach
-  words.forEach( function(word) {
-    if(word.startsWith( VERB_CHECK ))
-      result.push(word);
-  });
+  // words.forEach( function(word) {
+  //   if(word.startsWith( VERB_PREFIX ))
+  //     result.push(word);
+  // });
+
+  //optimum
+  result = words.filter(word => word.startsWith(VERB_PREFIX));
 
   return result;
 }
@@ -73,10 +82,13 @@ function getIntegers(nums) {
   // }
 
   // forEach
-  nums.forEach( function(num) {
-    if(Number.isInteger( num) )
-      result.push(num);
-  });
+  // nums.forEach( function(num) {
+  //   if(Number.isInteger( num) )
+  //     result.push(num);
+  // });
+
+  //optimum
+  result = nums.filter(num => Number.isInteger(num));
 
   return result;
 }
@@ -93,10 +105,13 @@ function getCities(users) {
   // }
 
   // forEach
-  users.forEach( function(user) {
-    if( (user.data !== undefined) && (user.data.city != undefined))    // make sure it uses lazy comparisons! (Likely)
-      result.push(user.data.city.displayName);
-  });
+  // users.forEach( function(user) {
+  //   if( (user.data !== undefined) && (user.data.city != undefined))    // make sure it uses lazy comparisons! (Likely)
+  //     result.push(user.data.city.displayName);
+  // });
+
+  //optimum
+  result = users.map( user => user.data.city.displayName );
 
   return result;
 }
@@ -113,10 +128,13 @@ function getSquareRoots(nums) {
   // }
 
   // forEach
-  nums.forEach(function(num) {
-    if(! isNaN(num))
-      result.push(Math.round(Math.sqrt(num) * 100) / 100 );       // sqrt and round to 2 dp (* 100 => / 100)
-  });
+  // nums.forEach(function(num) {
+  //   if(! isNaN(num))
+  //     result.push(Math.round(Math.sqrt(num) * 100) / 100 );       // sqrt and round to 2 dp (* 100 => / 100)
+  // });
+
+  // optimum
+  result = nums.map( num => Math.round(Math.sqrt(num) * 100) / 100);
 
 
   return result;
@@ -135,10 +153,13 @@ function findSentencesContaining(sentences, str) {
   // }
 
   // forEach
-  sentences.forEach(function(sentence) {
-    if(sentence.toLowerCase().includes(str.toLowerCase()))        // .toLowerCase() to ignore case
-      result.push(sentence);
-  });
+  // sentences.forEach(function(sentence) {
+  //   if(sentence.toLowerCase().includes(str.toLowerCase()))        // .toLowerCase() to ignore case
+  //     result.push(sentence);
+  // });
+
+  //optimum
+  result = sentences.filter( sentence => sentence.toLowerCase().includes(str.toLowerCase()));
 
   return result;
 }
@@ -155,10 +176,13 @@ function getLongestSide(sides){
   // }
 
   //forEach
-  sides.forEach(function(side) {
-    if(side > longest)
-      longest = side;
-  });
+  // sides.forEach(function(side) {
+  //   if(side > longest)
+  //     longest = side;
+  // });
+
+  //optimum
+  longest = sides.reduce( (prevSide, currentSide) => currentSide > prevSide ? currentSide : prevSide);
 
   return longest;
 
@@ -176,10 +200,13 @@ function getLongestSides(triangles) {
   // }
 
   // forEach
-  triangles.forEach(function(sides) {
-    if( Array.isArray(sides))
-      result.push(getLongestSide(sides));
-  });
+  // triangles.forEach(function(sides) {
+  //   if( Array.isArray(sides))
+  //     result.push(getLongestSide(sides));
+  // });
+
+  //optimum
+  result = triangles.map( sides => getLongestSide(sides));
 
   return result;
 }
