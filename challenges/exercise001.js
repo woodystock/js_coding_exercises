@@ -190,10 +190,7 @@ function countLinuxUsers(users) {
 function getMeanScore(scores) {
   if (scores === undefined) throw new Error("scores is required");
 
-  let total = 0;
-
-  for (let score of scores)                                    // calc the sum of all the scores
-    total += score;
+  let total = scores.reduce((previousValue, currentValue) => previousValue + currentValue);
 
   return Math.round(total / scores.length * 100) / 100;     // average and round to 2 dp
 }

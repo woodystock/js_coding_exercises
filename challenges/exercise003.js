@@ -12,13 +12,14 @@ function camelCaseWords(words) {
   let camelCased = "";
   let isFirst = true;
 
+
   for(let word of words) {
-    if(isFirst) {
+    if(isFirst) {                     // make sure we skip the first word
       camelCased += word;
-      isFirst = false;
+      isFirst = false;                // change flag for next iterations
     }
     else {
-      camelCased += capitalize(word);
+      camelCased += capitalize(word); // reuse code from exercise001 incase of refactoring
     }
   }
   return camelCased;
@@ -26,7 +27,8 @@ function camelCaseWords(words) {
 
 function getTotalSubjects(people) {
   if (people === undefined) throw new Error("people is required");
-  // Your code here!
+  
+  
 }
 
 function checkIngredients(menu, ingredient) {
