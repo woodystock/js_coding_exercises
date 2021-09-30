@@ -131,7 +131,35 @@ function getMiddleCharacter(str) {
 
 function reverseWord(word) {
   if (word === undefined) throw new Error("word is required");
-  // Add your code here!
+
+  let wordArr = word.split("");                           // split chars into array for easier manipulation
+
+  /////////////////////////////////////////////////////////////////////////////////////
+  /**
+   * CUSTOM METHOD
+   * 
+   * Full control over code. Could be useful for future updates or if .reverse() not deemed as
+   * optimised.
+   */
+
+
+  // let buffer;                                             // a buffer to help swap 2 values
+
+  // for(let i = 0; i < wordArr.length / 2; ++i ) {          // only need to iterate through half of the word
+  //   buffer = wordArr[i];                                  // store the char to swap
+  //   wordArr[i] = wordArr[word.length - i - 1];            // replace the adjacent char
+  //   wordArr[word.length - i - 1] = buffer;                // put in the previously stored char
+  // }
+
+  // return wordArr.join("");                                // parse the array back into a string
+  ////////////////////////////////////////////////////////////////////////////////////////
+  
+  /**
+   * REVERSE METHOD
+   * Relient on .reverse() being optimised (which it probably is). Custom method could be faster.
+   * 
+   */
+  return wordArr.reverse().join("");                                // reverse and parse the array back into a string
 }
 
 function reverseAllWords(words) {
