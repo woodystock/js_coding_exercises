@@ -94,8 +94,39 @@ function getSalePrice(originalPrice, reduction) {
 }
 
 function getMiddleCharacter(str) {
-  if (str === undefined) throw new Error("str is required");
-  // Add your code here!
+
+  /**
+  * If the word has even length, the mid point will be an integer therefore the previous integer will
+  * be mid - 1 and the next integar will be mid + 1 giving us a range of 2.
+  * 
+  * If the word has odd length, the mid point will have a suffix .5, the previous integer will be mid - .5 and
+  * the next integer will be mid + .5 giving us a range of 1.
+  * 
+  * e.g.
+  * IF word length = 4
+  * mid = 2
+  * prev = 1
+  * next = 3
+  * range = 2
+  * 
+  * IF word length = 5
+  * mid = 2.5
+  * prev = 2
+  * next = 3
+  * range = 1
+  */
+
+
+ if (str === undefined) throw new Error("str is required");
+ if( str.length == 0) throw new Error("str cannot be empty")
+
+ let midPos = str.length / 2;                            // find the middle position
+
+ let bottomLimit = Math.floor( midPos - 0.5 );           // calc previous integer (simplified as we can be sure of the input)        
+ let topLimit = Math.floor( midPos + 1);                // calc next integer (simplified as we can be sure of the input) 
+ 
+
+ return str.slice(bottomLimit, topLimit );               // return only the middle section
 }
 
 function reverseWord(word) {
