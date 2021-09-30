@@ -1,12 +1,20 @@
 const findNextNumber = (nums, n) => {
   if (nums === undefined) throw new Error("nums is required");
   if (n === undefined) throw new Error("n is required");
-  // Your code here!
+  
+  // use a for loop here, as we don't need to check the last value
+  for(let i = 0; i < nums.length - 1; ++i){
+    if(nums[i] === n) return nums[ i + 1 ];       // if we find the number, return the next
+  }
+
+  // if nothing was found, return null
+  return null;
 };
 
 const count1sand0s = str => {
   if (str === undefined) throw new Error("str is required");
-  // Your code here!
+  
+  
 };
 
 const reverseNumber = n => {
