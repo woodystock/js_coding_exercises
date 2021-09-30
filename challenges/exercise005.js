@@ -11,15 +11,39 @@ const findNextNumber = (nums, n) => {
   return null;
 };
 
+const BINARY = {
+  ZERO: "0",
+  ONE: "1"
+}
+
 const count1sand0s = str => {
   if (str === undefined) throw new Error("str is required");
   
-  
+  arr = str.split("");
+
+  result = {};
+  result[BINARY.ZERO] = 0;        // counter for 0 inside object
+  result[BINARY.ONE] = 0;         // counter for 1 inside object
+
+  arr.forEach( char => ++result[char]);
+
+  return result;
+
 };
 
 const reverseNumber = n => {
   if (n === undefined) throw new Error("n is required");
-  // Your code here!
+
+  /**
+   * 1. convert to string
+   * 2. split into an array
+   * 3. reverse the array
+   * 4. convert back into string
+   * 5. finally convert it back into a number
+   */
+
+  // single line, as it is fairly readable
+  return Number.parseInt(n.toString().split("").reverse().join(""));
 };
 
 const sumArrays = arrs => {
