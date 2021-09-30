@@ -19,7 +19,7 @@ function camelCaseWords(words) {
       isFirst = false;                // change flag for next iterations
     }
     else {
-      camelCased += capitalize(word); // reuse code from exercise001 incase of refactoring
+      camelCased += capitalize(word); // reuse code from exercise001 in case of refactoring
     }
   }
   return camelCased;
@@ -28,13 +28,18 @@ function camelCaseWords(words) {
 function getTotalSubjects(people) {
   if (people === undefined) throw new Error("people is required");
   
-  
+  // Using a reducer for speed, though skips deep validation on subjects which may be dangerous
+  // [NB: Speed vs safety discussion for this method required]
+  const subjectReducer = ((prevValue, currentValue) => prevValue + (currentValue.subjects === undefined) ? 0 : currentValue.subjects.length);
+
+  return people.reduce(subjectReducer, 0);
 }
 
 function checkIngredients(menu, ingredient) {
   if (menu === undefined) throw new Error("menu is required");
   if (!ingredient) throw new Error("ingredient is required");
-  // Your code here!
+  
+  
 }
 
 function duplicateNumbers(arr1, arr2) {
