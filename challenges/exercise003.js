@@ -1,11 +1,27 @@
+const { capitalize } = require("./exercise001");
+
 function getSquares(nums) {
   if (nums === undefined) throw new Error("nums is required");
-  // Your code here!
+  
+  return nums.map( x => x * x);
 }
 
 function camelCaseWords(words) {
   if (words === undefined) throw new Error("words is required");
-  // Your code here!
+  
+  let camelCased = "";
+  let isFirst = true;
+
+  for(let word of words) {
+    if(isFirst) {
+      camelCased += word;
+      isFirst = false;
+    }
+    else {
+      camelCased += capitalize(word);
+    }
+  }
+  return camelCased;
 }
 
 function getTotalSubjects(people) {
