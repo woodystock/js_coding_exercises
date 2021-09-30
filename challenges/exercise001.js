@@ -11,10 +11,59 @@ function capitalize(word) {
   return word.charAt(0).toUpperCase() + word.slice(1, word.length);     // first char=>upper case, then merge rest of word
 }
 
-function generateInitials(firstName, lastName) {
+// "ENUM" for a list of formats to generate initials
+const initialsFormat = {
+  FORMAL: "formal",                 // no periods between initials
+  INFORMAL: "informal",             // periods between initials
+  APPEASE_TEST: "appease_test"      // periods on first initial, not on second.... [NB: CHECK IF DESIRED!]
+}
+
+function generateInitials(firstName, lastName, format = initialsFormat.APPEASE_TEST) {
   if (firstName === undefined) throw new Error("firstName is required");
   if (lastName === undefined) throw new Error("lastName is required");
-  // Add your code here!
+
+  let initials = [];
+
+  if( firstName.length != 0) {                                  // if the firstname is empty, skip it
+
+    let firstInitial = firstName.charAt(0).toUpperCase();       // seperate and uppercase the initial [NB: CHECK IF DESIERED!]
+
+    switch(format) {                                           // handle different formats [EXT: add more cases as required]
+
+      case initialsFormat.INFORMAL:
+      case initialsFormat.APPEASE_TEST:                         // Both informal and the test, wants a period on the first initial
+        firstInitial += ".";
+        break;
+
+      default:
+        // do nothing
+        break;
+    }
+
+    initials.push(firstInitial);
+    
+  }
+
+  if( lastName.length != 0) {                                   // if lastName empty, skip it            
+
+    let lastInitial = lastName.charAt(0).toUpperCase();         // seperate and uppercase the initial [NB: CHECK IF DESIRED!]
+
+    switch(format)                                              // handle different formats [EXT: add more cases as required]
+    {
+      case initialsFormat.INFORMAL:                             // Only informal wants a period on the last initial
+        firstInitial += ".";
+        break;
+
+      default: 
+        // do nothing
+        break;
+    }
+
+    initials.push(lastInitial);
+
+  }
+
+    return initials.join("");
 }
 
 function addVAT(originalPrice, vatRate) {
