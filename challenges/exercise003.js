@@ -30,7 +30,7 @@ function getTotalSubjects(people) {
   
   // Using a reducer for speed, though skips deep validation on subjects which may be dangerous
   // [NB: Speed vs safety discussion for this method required]
-  const subjectReducer = ((prevValue, currentValue) => prevValue + (currentValue.subjects === undefined) ? 0 : currentValue.subjects.length);
+  const subjectReducer = ((prevValue, currentValue) => prevValue + currentValue.subjects.length);
 
   return people.reduce(subjectReducer, 0);
 }
@@ -50,7 +50,15 @@ function checkIngredients(menu, ingredient) {
 function duplicateNumbers(arr1, arr2) {
   if (arr1 === undefined) throw new Error("arr1 is required");
   if (arr2 === undefined) throw new Error("arr2 is required");
-  // Your code here!
+  
+  let duplicates = [];
+
+  for(let value of arr1 ) {
+    if(duplicates.indexOf(value) == -1 && arr2.indexOf(value) != -1)    // if its not already in duplicates and it is in the 2nd array 
+      duplicates.push(value);                                           // push it into the duplicates
+  }
+
+  return duplicates.sort();
 }
 
 module.exports = {
