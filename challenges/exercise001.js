@@ -69,7 +69,14 @@ function generateInitials(firstName, lastName, format = initialsFormat.APPEASE_T
 function addVAT(originalPrice, vatRate) {
   if (originalPrice === undefined) throw new Error("originalPrice is requied");
   if (vatRate === undefined) throw new Error("vatRate is required");
-  // Add your code here!
+  
+  let priceInPence = originalPrice * 100;                         // convert to pence as that is our lowest possible unit
+  let vatMultiplier = vatRate / 100;                              // vatRate to percentage multiplier
+  let vatCost = priceInPence * vatMultiplier;
+  let vatPrice = Math.round(priceInPence + vatCost);              // calc the added vat, rounding to nearest penny
+
+  return vatPrice / 100;                                          // convert back to original pound format ( max 2 dp as vatPrice is an int )
+
 }
 
 function getSalePrice(originalPrice, reduction) {
