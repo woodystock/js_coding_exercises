@@ -164,7 +164,12 @@ function reverseWord(word) {
 
 function reverseAllWords(words) {
   if (words === undefined) throw new Error("words is required");
-  // Add your code here!
+  
+  let reversed = [];                                
+  for( let word of words )
+    reversed.push( reverseWord( word ) );
+
+  return reversed;
 }
 
 function countLinuxUsers(users) {
