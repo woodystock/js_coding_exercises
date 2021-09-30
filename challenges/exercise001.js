@@ -82,7 +82,15 @@ function addVAT(originalPrice, vatRate) {
 function getSalePrice(originalPrice, reduction) {
   if (originalPrice === undefined) throw new Error("originalPrice is required");
   if (reduction === undefined) throw new Error("reduction is required");
-  // Add your code here!
+
+  if(reduction < 0) throw new Error("reduction cannot be negative. Try profiteer(price, increase)");
+  
+  let priceInPence = originalPrice * 100;                         // convert to pence as that is our lowest possible unit
+  let reductionMultiplier = reduction / 100;                      // reduction to percentage multiplier
+  let reductionValue = priceInPence * reductionMultiplier;        
+  let reducedPrice = Math.round( priceInPence - reductionValue ); // calc the reduction amount, rounding to nearest penny
+
+  return reducedPrice / 100;                                      // convert back to original pound format ( max 2 dp as vatPrice is an int )
 }
 
 function getMiddleCharacter(str) {
