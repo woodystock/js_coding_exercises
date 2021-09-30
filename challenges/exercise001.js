@@ -1,6 +1,14 @@
 function capitalize(word) {
+  /**
+   * TODO
+   * Would consider using RegEx for this as it will compute quicker and is a quick google solution, 
+   * but that doesn't display much understanding behind the problem as I am not a RegEx-pert
+   */
   if (word === undefined) throw new Error("word is required");
-  // Add your code here!
+
+  if(word.length == 0)  return word;                                    // if the string is empty, do nothing
+
+  return word.charAt(0).toUpperCase() + word.slice(1, word.length);     // first char=>upper case, then merge rest of word
 }
 
 function generateInitials(firstName, lastName) {
