@@ -4,6 +4,12 @@
  */
 const sumDigits = n => {
   if (n === undefined) throw new Error("n is required");
+
+  const numChars = Math.abs(n).toString().split("");
+
+  const nums = numChars.map( char => parseInt(char) );
+
+  return nums.reduce( (prevValue, currValue) => prevValue + currValue);
 };
 
 /**
