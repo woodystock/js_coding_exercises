@@ -31,3 +31,26 @@ describe("getComplementaryDNA", () => {
     expect(getComplementaryDNA("CGGTTTAA")).toBe("GCCAAATT");
   });
 });
+
+describe("isItPrime", () => {
+  test("returns true only if the number is prime", () => {
+    expect(isItPrime(3)).toBe(true);
+    expect(isItPrime(10)).toBe(false);
+    expect(isItPrime(23)).toBe(true);
+    expect(isItPrime(50)).toBe(false);
+  });
+
+  test("returns false if the value is 1", () => {
+    expect(isItPrime(1)).toBe(false);
+  });
+
+  test("returns false if the value is 0", () => {
+    expect(isItPrime(0)).toBe(false);
+  });
+
+  test("does not time out on larger values", () => {
+    expect(isItPrime(524287)).toBe(true);
+    expect(isItPrime(2147483647)).toBe(true);
+    expect(isItPrime(1000000000)).toBe(false);
+  });
+});
