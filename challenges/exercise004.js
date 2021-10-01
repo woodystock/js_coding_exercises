@@ -167,7 +167,7 @@ function findSentencesContaining(sentences, str) {
 function getLongestSide(sides){
   if(!sides) throw new Error("sides is required");
   
-  longest = 0;                                                    // reset longest
+  let longest = 0;                                                    // reset longest
 
   // for loop
   // for( let i = 0; i < sides.length; ++i) {                 // loop through the triangle sets

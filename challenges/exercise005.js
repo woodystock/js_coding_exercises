@@ -11,6 +11,7 @@ const findNextNumber = (nums, n) => {
   return null;
 };
 
+// "ENUM" to refernce the different binary values in an object
 const BINARY = {
   ZERO: "0",
   ONE: "1"
@@ -19,13 +20,13 @@ const BINARY = {
 const count1sand0s = str => {
   if (str === undefined) throw new Error("str is required");
   
-  arr = str.split("");
+  let strArray = str.split("");
 
-  result = {};
+  let result = {};
   result[BINARY.ZERO] = 0;        // counter for 0 inside object
   result[BINARY.ONE] = 0;         // counter for 1 inside object
 
-  arr.forEach( char => ++result[char]);
+  strArray.forEach( char => ++result[char]);
 
   return result;
 
@@ -42,7 +43,6 @@ const reverseNumber = n => {
    * 5. convert back into a number
    */
 
-  // single line, as it is fairly readable
   //               5         1           2         3         4
   return Number.parseInt(n.toString().split("").reverse().join(""));
 };
@@ -50,17 +50,25 @@ const reverseNumber = n => {
 const sumArrays = arrs => {
   if (arrs === undefined) throw new Error("arrs is required");
 
-
-  const sumArr = (prevValue, currentValue) => {
+  // a reducer to sum all elements inside an array (consider adding to global)
+  const sumReduce = (prevValue, currentValue) => {
     return prevValue + currentValue;
   }
   
-  return arrs.reduce( (prevValue, currentValue) => prevValue + currentValue.reduce( sumArr ), 0);
+  // nested reduce, to sum each indivdual array
+  return arrs.reduce( (prevValue, currentValue) => prevValue + currentValue.reduce( sumReduce ), 0);
 };
 
 const arrShift = arr => {
   if (arr === undefined) throw new Error("arr is required");
-  // Your code here!
+  if( arr.length < 2)  return arr;                       // if the array isnt big enough, just return it
+
+  //swap using buffer
+  let buffer = arr[0];
+  arr[0] = arr[arr.length - 1];
+  arr[arr.length - 1] = buffer;
+
+  return arr;
 };
 
 const findNeedle = (haystack, searchTerm) => {
