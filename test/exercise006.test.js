@@ -54,3 +54,14 @@ describe("isItPrime", () => {
     expect(isItPrime(1000000000)).toBe(false);
   });
 });
+
+describe("createMatrix", () => {
+  test("returns a matrix of size n * n filled with fill", () => {
+    expect(createMatrix(3,"a")).toEqual([
+      ["a","a","a"],
+      ["a","a","a"],
+      ["a","a","a"]
+    ]);
+    expect(createMatrix(1,"fill")).toEqual([["fill"]]);
+  });
+});

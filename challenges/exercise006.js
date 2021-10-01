@@ -74,6 +74,12 @@ const isItPrime = n => {
 const createMatrix = (n, fill) => {
   if (n === undefined) throw new Error("n is required");
   if (fill === undefined) throw new Error("fill is required");
+
+  // 1. create a new array of size n...
+  // 2. fill it with new arrays of size n... 
+  // 3. that are filled with the param 'fill'
+  //        1          2             3
+  return Array(n).fill(Array(n).fill( fill ));
 };
 
 /**
