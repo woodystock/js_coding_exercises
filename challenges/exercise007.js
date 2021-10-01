@@ -67,6 +67,24 @@ const createRange = (start, end, step = 1) => {
 const getScreentimeAlertList = (users, date) => {
   if (users === undefined) throw new Error("users is required");
   if (date === undefined) throw new Error("date is required");
+
+  const alertUsers = [];
+
+  for(let user of users) {
+    for(let record of user.screenTime) {
+      if(record.date === date) {
+        let totalUsage = 0;
+        for(let property in record.usage) {
+          totalUsage += record.usage[property];
+        }
+        if(totalUsage > 100) {
+          alertUsers.push( user.username );
+        }
+      }
+    }
+  }
+  
+  return alertUsers;
 };
 
 /**
