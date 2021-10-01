@@ -11,6 +11,9 @@ const sumMultiples = arr => {
   return multiples3and5.reduce( (prevValue, currentValue) => prevValue + currentValue );
 };
 
+
+const DNA_REG_EX = /(?![ACGT])./g;
+
 /**
  * This function will receive a string of characters and should return true/false depending on whether it is a valid DNA string. A valid DNA string may contain characters C, G, T or A only.
  * @param {String} str
@@ -18,8 +21,9 @@ const sumMultiples = arr => {
  */
 const isValidDNA = str => {
   if (str === undefined) throw new Error("str is required");
+  if( str === "") return false;
 
-  return str.toLowerCase().match(/(?![acgt])./g) === null;
+  return str.match(DNA_REG_EX) === null;
 };
 
 /**
@@ -29,6 +33,17 @@ const isValidDNA = str => {
  */
 const getComplementaryDNA = str => {
   if (str === undefined) throw new Error("str is required");
+  if( !isValidDNA(str))  throw new Error("str is not a valid DNA string");
+
+  const dnaPairLookup = {
+    T: "A",
+    A: "T",
+    C: "G",
+    G: "C"
+  }
+
+  const characters = str.split("");
+  return characters.map( char => dnaPairLookup[char]).join("");
 };
 
 /**

@@ -21,8 +21,13 @@ describe("isValidDNA", () => {
     expect(isValidDNA("DNA_ROCKS")).toBe(false);
     expect(isValidDNA("CGTA?")).toBe(false);
   });
+  test("returns false if the string is empty", () => {
+    expect(isValidDNA("")).toBe(false);
+  });
+});
 
-  test("is not case sensitive", () => {
-    expect(isValidDNA("cgTtaA")).toBe(true);
+describe("getComplementaryDNA", () => {
+  test("a string of the complementary base pairs. In DNA, T always pairs with A, and C always pairs with G.", () => {
+    expect(getComplementaryDNA("CGGTTTAA")).toBe("GCCAAATT");
   });
 });
