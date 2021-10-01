@@ -63,3 +63,10 @@ describe("getScreentimeAlertList", () => {
     expect(getScreentimeAlertList([user1, user2],"2019-05-04")).toEqual(["beth_1234"]);
   });
 });
+
+describe("hexToRGB", () => {
+  test("returns an array of the decimal values for Red, Green and Blue contained in  'hexStr;", () => {
+    expect(hexToRGB("#FFFFFF")).toEqual([255,255,255]);
+    expect(hexToRGB("#12F3DE")).toEqual([18,243,222]);
+  });
+});

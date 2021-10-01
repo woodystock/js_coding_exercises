@@ -83,7 +83,7 @@ const getScreentimeAlertList = (users, date) => {
       }
     }
   }
-  
+
   return alertUsers;
 };
 
@@ -99,6 +99,15 @@ const getScreentimeAlertList = (users, date) => {
  */
 const hexToRGB = hexStr => {
   if (hexStr === undefined) throw new Error("hexStr is required");
+  
+  // checks for a valid hex string ('#FFFFFF')
+  if(hexStr.match(/^#[0-9A-F]{6}$/i) == null) throw new Error("hexStr is invalid")
+
+  return [
+    parseInt("0x" + hexStr.substring(1,3)),
+    parseInt("0x" + hexStr.substring(3,5)),
+    parseInt("0x" + hexStr.substring(5,7))
+  ]
 };
 
 /**
