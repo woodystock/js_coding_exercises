@@ -99,7 +99,7 @@ const getScreentimeAlertList = (users, date) => {
  */
 const hexToRGB = hexStr => {
   if (hexStr === undefined) throw new Error("hexStr is required");
-  
+
   // checks for a valid hex string ('#FFFFFF')
   if(hexStr.match(/^#[0-9A-F]{6}$/i) == null) throw new Error("hexStr is invalid")
 
@@ -122,6 +122,41 @@ const hexToRGB = hexStr => {
  */
 const findWinner = board => {
   if (board === undefined) throw new Error("board is required");
+
+  const checks = [{
+      target: [1,1],      // check middle square against..
+      possibleMatches:[
+        [[1,0],[1,2]],      // -- vertical mid
+        [[0,1],[2,1]],      // -- horizontal mid
+        [[0,0],[2,2]],      // -- diagonal 1
+        [[2,0],[0,2]]       // -- diagonal 2
+      ]
+    },{
+      target: [0,0],      // check top left square against...
+      possibleMatches:[
+        [[0,1],[0,2]],      // -- left side
+        [[1,0],[2,0]]       // -- top side
+      ]
+    },{
+      target: [2,2],      // check bottom right square against...
+      possibleMatches:[
+        [[2,1],[2,0]],      // -- right side
+        [[1,2],[0,2]]       // -- bottom side
+      ]
+    }];
+
+    for( let check of checks) {
+      let currentPlayer = board[check.target[0]][check.target[1]];
+      if( currentPlayer != null ) {
+        for(let match of check.possibleMatches) {
+          if( board[ match[0][0] ][ match[0][1] ] === currentPlayer && board[ match[1][0] ][ match[1][1] ] === currentPlayer)
+            return currentPlayer;
+        }
+      }
+    }
+
+    // if we get here, no winner has been found
+    return null;
 };
 
 module.exports = {

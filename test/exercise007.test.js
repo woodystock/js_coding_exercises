@@ -70,3 +70,40 @@ describe("hexToRGB", () => {
     expect(hexToRGB("#12F3DE")).toEqual([18,243,222]);
   });
 });
+
+describe("findWinner", () => {
+  test("returns the winning player (X, 0) if the naughts and crosses board has been won", () => {
+    const board1 = [
+      ["X", "0", null],
+      ["X", null, "0"],
+      ["X", null, "0"]
+    ];
+    const board2 = [
+      ["0", "0", "0"],
+      ["X", null, "0"],
+      [null, null, "0"]
+    ];
+    const board3 = [
+      ["0", "X", "0"],
+      ["X", "0", "0"],
+      [null, null, "0"]
+    ];
+    const board4 = [
+      ["0", "X", "X"],
+      ["X", "X", "0"],
+      ["X", null, "0"]
+    ];
+    expect(findWinner(board1)).toBe("X");
+    expect(findWinner(board2)).toBe("0");
+    expect(findWinner(board3)).toBe("0");
+    expect(findWinner(board4)).toBe("X");
+  });
+  test("returns null if nobody is winning", () => {
+    const board5 = [
+      ["0", "X", "X"],
+      ["X", null, "0"],
+      ["X", null, "0"]
+    ];
+    expect(findWinner(board5)).toBe(null);
+  });
+});
