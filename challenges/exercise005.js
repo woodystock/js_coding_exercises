@@ -75,21 +75,42 @@ const findNeedle = (haystack, searchTerm) => {
   if (haystack === undefined) throw new Error("haystack is required");
   if (searchTerm === undefined) throw new Error("searchTerm is required");
   
+  // convert to lower case to remove case sensitivity (only do it once to save computation)
   let searchTermLower = searchTerm.toLowerCase();
 
   for(let property in haystack) {
     
     let element = haystack[property].toString().toLowerCase();
     
+    // if we find the search term break and return true...
     if(element.includes(searchTermLower))  return true;
   }
 
+  // if we reach here, we havent found it, therefore return false
   return false;
 };
 
+const REGEX_REMOVE_SP_CHAR = /[^a-zA-Z ]/g; // NB Move the RegEx to helper funcs / constants
+
 const getWordFrequencies = str => {
   if (str === undefined) throw new Error("str is required");
-  // Your code here!
+  
+  // change to lowercase (for case sensitivity) and remove all punctuation with RegEx 
+  let cleanStr = str.toLowerCase().replace( REGEX_REMOVE_SP_CHAR, "");      
+
+  //split it into an array of words
+  let words = cleanStr.split(" ");
+
+  let frequencies = {};
+
+  // loop through those words
+  for(let word of words)
+    if( word in frequencies)        // if the word has already been logged..
+      ++frequencies[word];          // just increment the counter
+    else                          
+      frequencies[word] = 1;        // otherwise, set up a new property, and set to 1 (as we just found one)
+
+  return frequencies;
 };
 
 module.exports = {
