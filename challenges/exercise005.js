@@ -39,16 +39,23 @@ const reverseNumber = n => {
    * 2. split into an array
    * 3. reverse the array
    * 4. convert back into string
-   * 5. finally convert it back into a number
+   * 5. convert back into a number
    */
 
   // single line, as it is fairly readable
+  //               5         1           2         3         4
   return Number.parseInt(n.toString().split("").reverse().join(""));
 };
 
 const sumArrays = arrs => {
   if (arrs === undefined) throw new Error("arrs is required");
-  // Your code here!
+
+
+  const sumArr = (prevValue, currentValue) => {
+    return prevValue + currentValue;
+  }
+  
+  return arrs.reduce( (prevValue, currentValue) => prevValue + currentValue.reduce( sumArr ), 0);
 };
 
 const arrShift = arr => {
