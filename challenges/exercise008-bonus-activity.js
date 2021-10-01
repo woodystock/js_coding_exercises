@@ -1,14 +1,18 @@
 // Spread Syntax Bonus activity
 
 function printColours(colours){
-    if (!colours) throw new Error("colour is required");
-    // Your solution using the spread operator here!
+    if (!colours) throw new Error("colours is required");
+    
+    console.log(...colours);
+
+    return colours;
 }
 
 function shoppingList(list, newItem){
     if (!list) throw new Error("list is required");
     if (!newItem) throw new Error("newItem is required");
-    // Your solution using the spread operator here!
+    
+    return [...list, ...newItem];
 }
 
 function highestNumber(numbers){
