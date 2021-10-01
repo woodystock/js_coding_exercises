@@ -53,7 +53,9 @@ const getComplementaryDNA = str => {
  */
 const isItPrime = n => {
   if (n === undefined) throw new Error("n is required");
+  if(! Number.isInteger( n))  return false;
 
+  // only need to check up to the sqrt due to factor pairs
   for(let i = 2; i < Math.sqrt(n); ++i)
     if(n % i === 0) return false;
   
@@ -97,6 +99,17 @@ const createMatrix = (n, fill) => {
 const areWeCovered = (staff, day) => {
   if (staff === undefined) throw new Error("staff is required");
   if (day === undefined) throw new Error("day is required");
+  if( staff.length < 3) return false;         // impossible to pass with less than 3 staff
+
+  let staffCount = 0;
+  
+  for(let employee of staff) {                  // loop through the employees
+    if("rota" in employee)                      // avoid any possible reference errors
+      if(employee.rota.indexOf(day) != -1)
+        ++staffCount;
+  }
+
+  return staffCount > 2;
 };
 
 module.exports = {

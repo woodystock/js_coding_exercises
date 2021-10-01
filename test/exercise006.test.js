@@ -27,7 +27,7 @@ describe("isValidDNA", () => {
 });
 
 describe("getComplementaryDNA", () => {
-  test("a string of the complementary base pairs. In DNA, T always pairs with A, and C always pairs with G.", () => {
+  test("returns a string of the complementary base pairs. In DNA, T always pairs with A, and C always pairs with G.", () => {
     expect(getComplementaryDNA("CGGTTTAA")).toBe("GCCAAATT");
   });
 });
@@ -48,6 +48,10 @@ describe("isItPrime", () => {
     expect(isItPrime(0)).toBe(false);
   });
 
+  test("returns false if the value is a decimal", () => {
+    expect(isItPrime(4.37)).toBe(false);
+  });
+
   test("does not time out on larger values", () => {
     expect(isItPrime(524287)).toBe(true);
     expect(isItPrime(2147483647)).toBe(true);
@@ -63,5 +67,24 @@ describe("createMatrix", () => {
       ["a","a","a"]
     ]);
     expect(createMatrix(1,"fill")).toEqual([["fill"]]);
+  });
+});
+
+describe("areWeCovered", () => {
+  test("returns true if at least 3 staff are in the rota for the given day", () => {
+    const employee1 = {
+      name: "Sally",
+      rota: ["Monday", "Tuesday", "Friday"]
+    };
+    const employee2 = {
+      name: "Pedro",
+      rota: ["Saturday", "Sunday", "Tuesday", "Friday"]
+    };
+    const employee3 = {
+      name: "Steve",
+      rota: ["Monday", "Tuesday", "Sunday"]
+    };
+    expect(areWeCovered([employee1,employee2,employee3], "Tuesday")).toBe(true);
+    expect(areWeCovered([employee1,employee2,employee3], "Sunday")).toBe(false);
   });
 });
