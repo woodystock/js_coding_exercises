@@ -26,8 +26,12 @@ describe("capitalize", () => {
     expect(capitalize("Hello")).toBe("Hello");
   });
 
-  test("handles incorrect data types", () => {
-    expect(capitalize(123)).toBe(undefined);
+  test("works on empty strings", () => {
+    expect(capitalize("")).toBe("");
+  });
+
+  test("works on single characters", () => {
+    expect(capitalize("a")).toBe("A");
   });
 });
 

@@ -1,91 +1,42 @@
+const { isString, sumReducer } = require("./helper");
+
 function capitalize(word) {
-  if (word === undefined) throw new Error("word is required");
+  if (word === undefined || !isString(word)) throw new Error("word (as string) is required");
 
-  if (word.length == 0) return word;                                    // if the string is empty, do nothing
-
-  return word.toString().charAt(0).toUpperCase() + word.slice(1, word.length);     // first char=>upper case, then merge rest of word
+  return word.charAt(0).toUpperCase() + word.slice(1, word.length);     // first char=>upper case, then merge rest of word
 }
 
-// "ENUM" for a list of formats to generate initials
-const initialsFormat = {
-  FORMAL: "formal",                 // no periods between initials
-  INFORMAL: "informal",             // periods between initials
-  APPEASE_TEST: "appease_test"      // periods on first initial, not on second.... [NB: CHECK IF DESIRED!]
-}
-
-function generateInitials(firstName, lastName, format = initialsFormat.APPEASE_TEST) {
-  if (firstName === undefined) throw new Error("firstName is required");
-  if (lastName === undefined) throw new Error("lastName is required");
-
-  let initials = [];
-
-  if (firstName.length != 0) {                                  // if the firstname is empty, skip it
-
-    let firstInitial = firstName.charAt(0).toUpperCase();       // seperate and uppercase the initial [NB: CHECK IF DESIERED!]
-
-    switch (format) {                                           // handle different formats [EXT: add more cases as required]
-
-      case initialsFormat.INFORMAL:
-      case initialsFormat.APPEASE_TEST:                         // Both informal and the test, wants a period on the first initial
-        firstInitial += ".";
-        break;
-
-      default:
-        // do nothing
-        break;
-    }
-
-    initials.push(firstInitial);
-
-  }
-
-  if (lastName.length != 0) {                                   // if lastName empty, skip it            
-
-    let lastInitial = lastName.charAt(0).toUpperCase();         // seperate and uppercase the initial [NB: CHECK IF DESIRED!]
-
-    switch (format)                                              // handle different formats [EXT: add more cases as required]
-    {
-      case initialsFormat.INFORMAL:                             // Only informal wants a period on the last initial
-        lastInitial += ".";
-        break;
-
-      default:
-        // do nothing
-        break;
-    }
-
-    initials.push(lastInitial);
-
-  }
-
-  return initials.join("");
+function generateInitials(firstName, lastName) {
+  if (firstName === undefined || !isString(firstName) || firstName == "") throw new Error("firstName (as string) is required");
+  if (lastName === undefined || !isString(lastName) || lastName == "") throw new Error("lastName (as string) is required")
+  
+  return firstName.charAt(0).toUpperCase() + "." + lastName.charAt(0).toUpperCase();
 }
 
 function addVAT(originalPrice, vatRate) {
-  if (originalPrice === undefined) throw new Error("originalPrice is requied");
-  if (vatRate === undefined) throw new Error("vatRate is required");
+  if (originalPrice === undefined || isNaN(originalPrice)) throw new Error("originalPrice (as number) is requied");
+  if (vatRate === undefined || isNaN(vatRate)) throw new Error("vatRate (as number) is required");
 
-  let priceInPence = originalPrice * 100;                         // convert to pence as that is our lowest possible unit
-  let vatMultiplier = vatRate / 100;                              // vatRate to percentage multiplier
-  let vatCost = priceInPence * vatMultiplier;
-  let vatPrice = Math.round(priceInPence + vatCost);              // calc the added vat, rounding to nearest penny
+  const priceInPence = originalPrice * 100;                         // convert to pence as that is our lowest possible unit
+  const vatMultiplier = vatRate / 100;                              // vatRate to percentage multiplier
+  const vatCost = priceInPence * vatMultiplier;
+  const vatPrice = Math.round(priceInPence + vatCost);              // calc the added vat, rounding to nearest penny
 
   return vatPrice / 100;                                          // convert back to original pound format ( max 2 dp as vatPrice is an int )
 
 }
 
 function getSalePrice(originalPrice, reduction) {
-  if (originalPrice === undefined) throw new Error("originalPrice is required");
-  if (reduction === undefined) throw new Error("reduction is required");
+  if (originalPrice === undefined || isNaN(originalPrice)) throw new Error("originalPrice (as number) is required");
+  if (reduction === undefined || isNaN(reduction)) throw new Error("reduction (as number) is required");
 
-  if (reduction < 0) throw new Error("reduction cannot be negative. Try profiteer(price, increase)");
+  if (reduction < 0) throw new Error("reduction should not be negative. Try profiteer(price, increase)");
 
-  let priceInPence = originalPrice * 100;                         // convert to pence as that is our lowest possible unit
-  let reductionMultiplier = reduction / 100;                      // reduction to percentage multiplier
-  let reductionValue = priceInPence * reductionMultiplier;
-  let reducedPrice = Math.round(priceInPence - reductionValue); // calc the reduction amount, rounding to nearest penny
+  const priceInPence = originalPrice * 100;                         // convert to pence as that is our lowest possible unit
+  const reductionValue = priceInPence * ( reduction / 100 );
+  const reducedPrice = Math.round(priceInPence - reductionValue);   // calc the reduction amount, rounding to nearest penny
 
-  return reducedPrice / 100;                                      // convert back to original pound format ( max 2 dp as vatPrice is an int )
+  return reducedPrice / 100;                                      // convert back to original pound format ( max 2 dp as reducedPrice is an int )
 }
 
 function getMiddleCharacter(str) {
@@ -112,53 +63,25 @@ function getMiddleCharacter(str) {
   */
 
 
-  if (str === undefined) throw new Error("str is required");
-  if (str.length == 0) throw new Error("str cannot be empty")
+  if (str === undefined || !isString(str)) throw new Error("str (as string) is required");
 
-  let midPos = str.length / 2;                            // find the middle position
+  const midPos = str.length / 2;                            // find the middle position
 
-  let bottomLimit = Math.floor(midPos - 0.5);           // calc previous integer (simplified as we can be sure of the input)        
-  let topLimit = Math.floor(midPos + 1);                // calc next integer (simplified as we can be sure of the input) 
+  const bottomLimit = Math.floor(midPos - 0.5);           // calc previous integer (simplified as we can be sure of the input)        
+  const topLimit = Math.floor(midPos + 1);                // calc next integer (simplified as we can be sure of the input) 
 
 
   return str.slice(bottomLimit, topLimit);               // return only the middle section
 }
 
 function reverseWord(word) {
-  if (word === undefined) throw new Error("word is required");
+  if (word === undefined || ! isString(word)) throw new Error("word is required");
 
-  let wordArr = word.split("");                           // split chars into array for easier manipulation
-
-  /////////////////////////////////////////////////////////////////////////////////////
-  /**
-   * CUSTOM METHOD
-   * 
-   * Full control over code. Could be useful for future updates or if .reverse() not deemed as
-   * optimised.
-   */
-
-
-  // let buffer;                                             // a buffer to help swap 2 values
-
-  // for(let i = 0; i < wordArr.length / 2; ++i ) {          // only need to iterate through half of the word
-  //   buffer = wordArr[i];                                  // store the char to swap
-  //   wordArr[i] = wordArr[word.length - i - 1];            // replace the adjacent char
-  //   wordArr[word.length - i - 1] = buffer;                // put in the previously stored char
-  // }
-
-  // return wordArr.join("");                                // parse the array back into a string
-  ////////////////////////////////////////////////////////////////////////////////////////
-
-  /**
-   * REVERSE METHOD
-   * Relient on .reverse() being optimised (which it probably is). Custom method could be faster.
-   * 
-   */
-  return wordArr.reverse().join("");                                // reverse and parse the array back into a string
+  return [...word].reverse().join("");
 }
 
 function reverseAllWords(words) {
-  if (words === undefined) throw new Error("words is required");
+  if (words === undefined || ! Array.isArray(words)) throw new Error("words (as Array) is required");
 
   return words.map(word => reverseWord(word));
 }
@@ -176,16 +99,16 @@ function countLinuxUsers(users) {
   let linuxCount = 0;
 
   for (let user of users) {                                    // iterate through each user
-    if (user.type === OS_TYPE.LINUX) linuxCount++;         // increment upon finding a linux user
+    if (user?.type === OS_TYPE.LINUX) linuxCount++;         // increment upon finding a linux user
   }
 
   return linuxCount;
 }
 
 function getMeanScore(scores) {
-  if (scores === undefined) throw new Error("scores is required");
+  if (scores === undefined || !Array.isArray(scores)) throw new Error("scores (as Array) is required");
 
-  let total = scores.reduce((previousValue, currentValue) => previousValue + currentValue);
+  const total = scores.reduce(sumReducer);  //sumReducer found in helper.js
 
   return Math.round(total / scores.length * 100) / 100;     // average and round to 2 dp
 }
