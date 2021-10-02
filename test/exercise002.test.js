@@ -22,6 +22,14 @@ describe("getFillings", () => {
     };
     expect(getFillings(sandwich2)).toEqual(["smoked salmon", "dill"]);
   });
+
+  test("returns undefined if the sandwich has no fillings", () => {
+    const sandwich = {
+      bread: "Sourdough",
+      accompaniment: "crisps"
+    };
+    expect(getFillings(sandwich)).toEqual(undefined);
+  });
 });
 
 describe("isFromManchester", () => {
@@ -38,6 +46,14 @@ describe("isFromManchester", () => {
     const person = {
       name: "Anisa",
       city: "Leeds",
+      age: 39
+    };
+    expect(isFromManchester(person)).toBe(false);
+  });
+
+  test("handles if no city param", () => {
+    const person = {
+      name: "Anisa",
       age: 39
     };
     expect(isFromManchester(person)).toBe(false);
@@ -140,6 +156,51 @@ describe("hasMPostCode", () => {
         line1: "11 Stone Street",
         city: "Maidstone",
         postCode: "ME20 5BR"
+      }
+    };
+    expect(hasMPostCode(person)).toBe(false);
+  });
+
+  test("returns true if the person has a postcode starting with M but no city", () => {
+    const person = {
+      name: "Mohammed",
+      age: 23,
+      address: {
+        line1: "1a Pool Road",
+        postCode: "M16 8DR"
+      }
+    };
+    expect(hasMPostCode(person)).toBe(true);
+  });
+
+  test("returns false if the person has a postcode starting with M but not a manchester postcode and no city", () => {
+    const person = {
+      name: "Jahin",
+      age: 55,
+      address: {
+        line1: "11 Stone Street",
+        city: "Maidstone",
+        postCode: "ME20 5BR"
+      }
+    };
+    expect(hasMPostCode(person)).toBe(false);
+  });
+
+  test("returns false if no address data", () => {
+    const person = {
+      name: "Jahin",
+      age: 55
+    };
+    expect(hasMPostCode(person)).toBe(false);
+  });
+
+  test("returns false if no postcode", () => {
+    const person = {
+      name: "Jahin",
+      age: 55,
+      address: {
+        line1: "11 Stone Street",
+        city: "Maidstone"
       }
     };
     expect(hasMPostCode(person)).toBe(false);
