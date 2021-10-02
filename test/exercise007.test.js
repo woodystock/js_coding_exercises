@@ -26,6 +26,8 @@ describe("createRange", () => {
   test("returns an array filled with the digits 'start' to 'end' incrementing by 'step'", () => {
     expect(createRange(2,6,2)).toEqual([2,4,6]);
     expect(createRange(5,50, 5)).toEqual([5,10,15,20,25,30,35,40,45,50]);
+    expect(createRange(1,3, 0.5)).toEqual([1,1.5,2,2.5,3]);
+    expect(createRange(40.7,60, 10.1)).toEqual([40.7,50.8]);
   });
 
   test("if end is too big it is not at the end", () => {

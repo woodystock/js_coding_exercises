@@ -20,7 +20,7 @@ const sumDigits = n => {
  * @param {Number} end
  * @param {Number} step
  */
-const createRange = (start, end, step = 1) => {
+const createRange = (start, end, step = 1, dp = 2) => {
   if (start === undefined) throw new Error("start is required");
   if (end === undefined) throw new Error("end is required");
 
@@ -28,8 +28,15 @@ const createRange = (start, end, step = 1) => {
 
   const range = [];
   for(let i = start; i <= end; i += step ) {
-    range.push(i);
+    if(Number.isInteger(i)){
+      range.push(i);
+    }
+    else {
+      range.push( Number.parseFloat(i.toFixed(dp)) );
+    }
   }
+
+  
 
   return range;
 

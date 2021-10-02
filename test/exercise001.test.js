@@ -21,6 +21,14 @@ describe("capitalize", () => {
   test("does nothing if the string is already capitalized", () => {
     expect(capitalize("Hello")).toBe("Hello");
   });
+
+  test("does nothing if the string is already capitalized", () => {
+    expect(capitalize("Hello")).toBe("Hello");
+  });
+
+  test("handles incorrect data types", () => {
+    expect(capitalize(123)).toBe(undefined);
+  });
 });
 
 describe("generateInitials", () => {
