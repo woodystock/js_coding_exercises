@@ -9,7 +9,7 @@ function capitalize(word) {
 function generateInitials(firstName, lastName) {
   if (firstName === undefined || !isString(firstName) || firstName == "") throw new Error("firstName (as string) is required");
   if (lastName === undefined || !isString(lastName) || lastName == "") throw new Error("lastName (as string) is required")
-  
+
   return firstName.charAt(0).toUpperCase() + "." + lastName.charAt(0).toUpperCase();
 }
 
@@ -33,7 +33,7 @@ function getSalePrice(originalPrice, reduction) {
   if (reduction < 0) throw new Error("reduction should not be negative. Try profiteer(price, increase)");
 
   const priceInPence = originalPrice * 100;                         // convert to pence as that is our lowest possible unit
-  const reductionValue = priceInPence * ( reduction / 100 );
+  const reductionValue = priceInPence * (reduction / 100);
   const reducedPrice = Math.round(priceInPence - reductionValue);   // calc the reduction amount, rounding to nearest penny
 
   return reducedPrice / 100;                                      // convert back to original pound format ( max 2 dp as reducedPrice is an int )
@@ -75,13 +75,13 @@ function getMiddleCharacter(str) {
 }
 
 function reverseWord(word) {
-  if (word === undefined || ! isString(word)) throw new Error("word is required");
+  if (word === undefined || !isString(word)) throw new Error("word is required");
 
   return [...word].reverse().join("");
 }
 
 function reverseAllWords(words) {
-  if (words === undefined || ! Array.isArray(words)) throw new Error("words (as Array) is required");
+  if (words === undefined || !Array.isArray(words)) throw new Error("words (as Array) is required");
 
   return words.map(word => reverseWord(word));
 }
