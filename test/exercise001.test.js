@@ -134,6 +134,23 @@ describe("countLinuxUsers", () => {
     ];
     expect(countLinuxUsers(users)).toBe(5);
   });
+
+  test("can handle objects without type", () => {
+    const users = [
+      { name: "Heather", OS: "Windows 8", type: "Windows" },
+      { name: "Paul", OS: "Firefox OS"},
+      { name: "Sheila", OS: "Windows 10", type: "Windows" },
+      { name: "Pedro", OS: "Windows 95", type: "Windows" }
+    ];
+    expect(countLinuxUsers(users)).toBe(0);
+    const users2 = [
+      { name: "Heather", OS: "Windows 8", type: "Windows" },
+      { name: "Paul", OS: "Firefox OS", type: undefined},
+      { name: "Sheila", OS: "Windows 10", type: "Windows" },
+      { name: "Pedro", OS: "Windows 95", type: "Windows" }
+    ];
+    expect(countLinuxUsers(users2)).toBe(0);
+  });
 });
 
 describe("getMeanScore", () => {
@@ -144,6 +161,14 @@ describe("getMeanScore", () => {
 
   test("returns the mean to 2 decimal places", () => {
     expect(getMeanScore([24, 44, 56, 11, 12, 17, 34])).toBe(28.29);
+  });
+
+  test("can handle single score", () => {
+    expect(getMeanScore([4])).toBe(4);
+  });
+
+  test("returns 0 if empty array", () => {
+    expect(getMeanScore([])).toBe(0);
   });
 });
 
@@ -163,4 +188,10 @@ describe("simpleFizzBuzz", () => {
   test("returns 'fizzbuzz' if the number is divisible by 3 and 5", () => {
     expect(simpleFizzBuzz(15)).toBe("fizzbuzz");
   });
+
+  test("returns 'fizzbuzz' if the number is 0 as 0 is divisible by everything (except 0)", () => {
+    expect(simpleFizzBuzz(0)).toBe("fizzbuzz");
+  });
+
+  
 });
