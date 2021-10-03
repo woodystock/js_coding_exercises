@@ -9,7 +9,7 @@ const {
 
 describe("sumMultiples", () => {
   test("returns the sum of numbers in an array that are multiples of 3 and 5", () => {
-    expect(sumMultiples([1,3,5])).toBe(8);
+    expect(sumMultiples([1, 3, 5])).toBe(8);
     expect(sumMultiples([5, 3, 7, 8, 1, 10])).toBe(18);
     expect(sumMultiples([4, 22, 654, 123, 65, 23, 40, 1])).toBe(882);
   });
@@ -23,6 +23,9 @@ describe("isValidDNA", () => {
   });
   test("returns false if the string is empty", () => {
     expect(isValidDNA("")).toBe(false);
+  });
+  test("is case sensitive", () => {
+    expect(isValidDNA("cggtttaa")).toBe(false);
   });
 });
 
@@ -61,12 +64,12 @@ describe("isItPrime", () => {
 
 describe("createMatrix", () => {
   test("returns a matrix of size n * n filled with fill", () => {
-    expect(createMatrix(3,"a")).toEqual([
-      ["a","a","a"],
-      ["a","a","a"],
-      ["a","a","a"]
+    expect(createMatrix(3, "a")).toEqual([
+      ["a", "a", "a"],
+      ["a", "a", "a"],
+      ["a", "a", "a"]
     ]);
-    expect(createMatrix(1,"fill")).toEqual([["fill"]]);
+    expect(createMatrix(1, "fill")).toEqual([["fill"]]);
   });
 });
 
@@ -84,7 +87,37 @@ describe("areWeCovered", () => {
       name: "Steve",
       rota: ["Monday", "Tuesday", "Sunday"]
     };
-    expect(areWeCovered([employee1,employee2,employee3], "Tuesday")).toBe(true);
-    expect(areWeCovered([employee1,employee2,employee3], "Sunday")).toBe(false);
+    expect(areWeCovered([employee1, employee2, employee3], "Tuesday")).toBe(true);
+    expect(areWeCovered([employee1, employee2, employee3], "Sunday")).toBe(false);
+  });
+  test("can handle empty and missing rotas", () => {
+    const employee1 = {
+      name: "Jeff",
+      rota: ["Monday", "Tuesday", "Friday", "Sunday"]
+    };
+    const employee2 = {
+      name: "Paula",
+      rota: ["Monday", "Tuesday", "Friday"]
+    };
+    const employee3 = {
+      name: "Ness",
+      rota: ["Monday", "Tuesday", "Friday", "Sunday"]
+    };
+
+
+    const employee4 = {
+      name: "Poo",
+      rota: []
+    };
+
+
+    expect(areWeCovered([employee1, employee2, employee3, employee4], "Tuesday")).toBe(true);
+    expect(areWeCovered([employee1, employee2, employee3, employee4], "Sunday")).toBe(false);
+
+    const employee5 = {
+      name: "Mr.Saturn"
+    };
+    expect(areWeCovered([employee1, employee2, employee3, employee5], "Tuesday")).toBe(true);
+    expect(areWeCovered([employee1, employee2, employee3, employee5], "Sunday")).toBe(false);
   });
 });

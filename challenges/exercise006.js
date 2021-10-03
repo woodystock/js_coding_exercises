@@ -1,3 +1,5 @@
+const { sumReducer, isString } = require("./helper");
+
 /**
  * This function will receive an array of numbers and should return the sum
  * of any numbers which are a multiple of 3 or 5
@@ -5,14 +7,12 @@
  * @returns {Number}
  */
 const sumMultiples = arr => {
-  if (arr === undefined) throw new Error("arr is required");
+  if (!Array.isArray(arr)) throw new Error("arr (as array) is required");
 
-  const multiples3and5 = arr.filter( num => !(num % 3) || !(num % 5) );
-  return multiples3and5.reduce( (prevValue, currentValue) => prevValue + currentValue );
+  const multiples3and5 = arr.filter(num => !(num % 3) || !(num % 5));
+
+  return multiples3and5.reduce(sumReducer);
 };
-
-
-const DNA_REG_EX = /(?![ACGT])./g;
 
 /**
  * This function will receive a string of characters and should return true/false depending on whether it is a valid DNA string. A valid DNA string may contain characters C, G, T or A only.
@@ -20,10 +20,11 @@ const DNA_REG_EX = /(?![ACGT])./g;
  * @returns {Boolean}
  */
 const isValidDNA = str => {
-  if (str === undefined) throw new Error("str is required");
-  if( str === "") return false;
+  if (!isString(str)) throw new Error("str (as string) is required");
 
-  return str.match(DNA_REG_EX) === null;
+  const DNA_REG_EX = /(?![ACGT])./g;
+
+  return str !== "" && str.match(DNA_REG_EX) === null;
 };
 
 /**
@@ -32,8 +33,8 @@ const isValidDNA = str => {
  * @returns {String}
  */
 const getComplementaryDNA = str => {
-  if (str === undefined) throw new Error("str is required");
-  if( !isValidDNA(str))  throw new Error("str is not a valid DNA string");
+  if (!isString(str)) throw new Error("str (as string) is required");
+  if (!isValidDNA(str)) throw new Error("str is not a valid DNA string");
 
   const dnaPairLookup = {
     T: "A",
@@ -42,8 +43,7 @@ const getComplementaryDNA = str => {
     G: "C"
   }
 
-  const characters = str.split("");
-  return characters.map( char => dnaPairLookup[char]).join("");
+  return [...str].map(char => dnaPairLookup[char]).join("");
 };
 
 /**
@@ -52,13 +52,13 @@ const getComplementaryDNA = str => {
  * @returns {Boolean}
  */
 const isItPrime = n => {
-  if (n === undefined) throw new Error("n is required");
-  if(! Number.isInteger( n))  return false;
+  if (isNaN(n)) throw new Error("n (as number) is required");
+  if (!Number.isInteger(n)) return false;
 
   // only need to check up to the sqrt due to factor pairs
-  for(let i = 2; i < Math.sqrt(n); ++i)
-    if(n % i === 0) return false;
-  
+  for (let i = 2; i < Math.sqrt(n); ++i)
+    if (n % i === 0) return false;
+
   return n > 1;
 };
 
@@ -70,18 +70,19 @@ const isItPrime = n => {
  *   ["foo", "foo", "foo"]
  * ]
  * @param {Number} n
- * @param {Any} fill
+ * @param {Any} fillContent
  * @returns {Array}
  */
-const createMatrix = (n, fill) => {
-  if (n === undefined) throw new Error("n is required");
-  if (fill === undefined) throw new Error("fill is required");
+const createMatrix = (n, fillContent) => {
+  if (isNaN(n)) throw new Error("n (as number) is required");
+  if (fillContent === undefined) throw new Error("fill is required");
+  if (! n > 0) throw new Error("n must be positive and not 0")
 
   // 1. create a new array of size n...
   // 2. fill it with new arrays of size n... 
-  // 3. that are filled with the param 'fill'
+  // 3. that are filled with the param 'fillContent' (renamed for readability)
   //        1          2             3
-  return Array(n).fill(Array(n).fill( fill ));
+  return Array(n).fill(Array(n).fill(fillContent));
 };
 
 /**
@@ -97,17 +98,18 @@ const createMatrix = (n, fill) => {
  * @returns {Boolean}
  */
 const areWeCovered = (staff, day) => {
-  if (staff === undefined) throw new Error("staff is required");
-  if (day === undefined) throw new Error("day is required");
-  if( staff.length < 3) return false;         // impossible to pass with less than 3 staff
+  if (!Array.isArray(staff)) throw new Error("staff (as array) is required");
+  if (!isString(day)) throw new Error("day is required");
+
+  if (staff.length < 3) return false;         // impossible to pass with less than 3 staff
 
   let staffCount = 0;
-  
-  for(let employee of staff) {                  // loop through the employees
-    if("rota" in employee)                      // avoid any possible reference errors
-      if(employee.rota.indexOf(day) != -1)
+
+  staff.forEach(employee => {                  // loop through the employees
+    if ("rota" in employee)                      // avoid any possible reference errors
+      if (employee.rota.indexOf(day) != -1)     // as it is a search, we cannot use optional chainging ('undefined' != -1 would equal true)
         ++staffCount;
-  }
+  });
 
   return staffCount > 2;
 };
