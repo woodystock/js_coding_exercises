@@ -1,7 +1,7 @@
 const { isString } = require("./helper");
 
 function findSmallNums(nums) {
-  if (!Array.isArray( nums )) throw new Error("nums (as array) is required");
+  if (!Array.isArray(nums)) throw new Error("nums (as array) is required");
 
   let result = [];
 
@@ -24,8 +24,8 @@ function findSmallNums(nums) {
 }
 
 function findNamesBeginningWith(names, char) {
-  if (! Array.isArray( names) ) throw new Error("names (as array) is required");
-  if (! isString(char) ) throw new Error("char (as string) is required");
+  if (!Array.isArray(names)) throw new Error("names (as array) is required");
+  if (!isString(char)) throw new Error("char (as string) is required");
 
   let result = [];
 
@@ -48,7 +48,7 @@ function findNamesBeginningWith(names, char) {
 }
 
 function findVerbs(words) {
-  if (! Array.isArray(words)) throw new Error("words (as array) is required");
+  if (!Array.isArray(words)) throw new Error("words (as array) is required");
 
   let result = [];
 
@@ -73,7 +73,7 @@ function findVerbs(words) {
 }
 
 function getIntegers(nums) {
-  if (! Array.isArray(nums)) throw new Error("nums (as array) is required");
+  if (!Array.isArray(nums)) throw new Error("nums (as array) is required");
 
   let result = [];
 
@@ -107,8 +107,8 @@ function getCities(users) {
   // }
 
   // forEach
-  users.forEach( function(user) {
-    if( (user.data !== undefined) && (user.data.city != undefined))    // make sure it uses lazy comparisons! (Likely)
+  users.forEach(function (user) {
+    if ((user.data !== undefined) && (user.data.city != undefined))    // make sure it uses lazy comparisons! (Likely)
       result.push(user.data.city.displayName);
   });
 
@@ -144,7 +144,7 @@ function getSquareRoots(nums) {
 
 function findSentencesContaining(sentences, str) {
   if (!Array.isArray(sentences)) throw new Error("sentences is required");
-  if (! isString(str)) throw new Error("str is required");
+  if (!isString(str)) throw new Error("str is required");
 
   let result = [];
 

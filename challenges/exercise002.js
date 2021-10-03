@@ -1,4 +1,4 @@
-const { isString, regEx_charUntilNumber } = require("./helper");
+const { isString } = require("./helper");
 
 function getFillings(sandwich) {
   if (sandwich == undefined) throw new Error("ingredients is required");

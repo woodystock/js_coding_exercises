@@ -1,4 +1,4 @@
-const { sumReducer, isString } = require("./helper");
+const { sum, isString } = require("./helper");
 
 /**
  * This function will receive an array of numbers and should return the sum
@@ -11,7 +11,7 @@ const sumMultiples = arr => {
 
   const multiples3and5 = arr.filter(num => !(num % 3) || !(num % 5));
 
-  return multiples3and5.reduce(sumReducer);
+  return multiples3and5.reduce(sum);
 };
 
 /**
@@ -22,9 +22,9 @@ const sumMultiples = arr => {
 const isValidDNA = str => {
   if (!isString(str)) throw new Error("str (as string) is required");
 
-  const DNA_REG_EX = /(?![ACGT])./g;
+  const regEx_DNAFormat = /(?![ACGT])./g;
 
-  return str !== "" && str.match(DNA_REG_EX) === null;
+  return str !== "" && str.match(regEx_DNAFormat) === null;
 };
 
 /**
@@ -76,7 +76,7 @@ const isItPrime = n => {
 const createMatrix = (n, fillContent) => {
   if (isNaN(n)) throw new Error("n (as number) is required");
   if (fillContent === undefined) throw new Error("fill is required");
-  if (! n > 0) throw new Error("n must be positive and not 0")
+  if (!n > 0) throw new Error("n must be positive and not 0")
 
   // 1. create a new array of size n...
   // 2. fill it with new arrays of size n... 

@@ -1,15 +1,16 @@
+const { sum, isString } = require("./helper");
 /**
  * This function takes a number, e.g. 123 and returns the sum of all its digits, e.g 6 in this example.
  * @param {Number} n
  */
 const sumDigits = n => {
-  if (n === undefined) throw new Error("n is required");
+  if (isNaN(n)) throw new Error("n (as number) is required");
 
-  const numChars = Math.abs(n).toString().split("");
+  const numChars = [...Math.abs(n).toString()];           // convert number to string (ignoring negative value)
 
-  const nums = numChars.map( char => parseInt(char) );
+  const nums = numChars.map(Number);                    // convert each char back to a number
 
-  return nums.reduce( (prevValue, currValue) => prevValue + currValue);
+  return nums.reduce(sum);                              // add the contents of the array
 };
 
 /**
@@ -21,25 +22,22 @@ const sumDigits = n => {
  * @param {Number} step
  */
 const createRange = (start, end, step = 1, dp = 2) => {
-  if (start === undefined) throw new Error("start is required");
-  if (end === undefined) throw new Error("end is required");
+  if (isNaN(start)) throw new Error("start (as number) is required");
+  if (isNaN(end)) throw new Error("end is required");
 
-  if( start > end)  return [];                          // if the start is larger than the end, no range needs to be created
+  if (start > end) return [];                          // if the start is larger than the end, no range needs to be created
 
   const range = [];
-  for(let i = start; i <= end; i += step ) {
-    if(Number.isInteger(i)){
+  for (let i = start; i <= end; i += step) {
+    if (Number.isInteger(i)) {
       range.push(i);
     }
     else {
-      range.push( Number.parseFloat(i.toFixed(dp)) );
+      range.push(Number.parseFloat(i.toFixed(dp)));
     }
   }
 
-  
-
   return range;
-
 };
 
 /**
@@ -73,23 +71,29 @@ const createRange = (start, end, step = 1, dp = 2) => {
  */
 const getScreentimeAlertList = (users, date) => {
   if (users === undefined) throw new Error("users is required");
-  if (date === undefined) throw new Error("date is required");
+
+  const regEx_dateFormat = /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/;
+
+  if (isString(date) && !date.match(regEx_dateFormat)) throw new Error("valid date (YYYY-MM-DD) is required");
+
 
   const alertUsers = [];
 
-  for(let user of users) {
-    for(let record of user.screenTime) {
-      if(record.date === date) {
+  users.forEach(user => {
+    user.screenTime?.forEach(record => {
+      if (record.date === date) {
         let totalUsage = 0;
-        for(let property in record.usage) {
-          totalUsage += record.usage[property];
-        }
-        if(totalUsage > 100) {
-          alertUsers.push( user.username );
+        if ("usage" in record) {
+          for (let property in record.usage) {
+            totalUsage += record.usage[property];
+          }
+          if (totalUsage > 100) {
+            alertUsers.push(user.username);
+          }
         }
       }
-    }
-  }
+    });
+  });
 
   return alertUsers;
 };
@@ -105,15 +109,15 @@ const getScreentimeAlertList = (users, date) => {
  * @param {String} str
  */
 const hexToRGB = hexStr => {
-  if (hexStr === undefined) throw new Error("hexStr is required");
 
-  // checks for a valid hex string ('#FFFFFF')
-  if(hexStr.match(/^#[0-9A-F]{6}$/i) == null) throw new Error("hexStr is invalid")
+  const regEx_hexColourFormat = /^#[0-9A-F]{6}$/;
+
+  if (!isString(hexStr) && !hexStr.match(regEx_hexColourFormat)) throw new Error("valid hexStr is required");
 
   return [
-    parseInt("0x" + hexStr.substring(1,3)),
-    parseInt("0x" + hexStr.substring(3,5)),
-    parseInt("0x" + hexStr.substring(5,7))
+    parseInt("0x" + hexStr.substring(1, 3)),
+    parseInt("0x" + hexStr.substring(3, 5)),
+    parseInt("0x" + hexStr.substring(5, 7))
   ]
 };
 
@@ -131,39 +135,46 @@ const findWinner = board => {
   if (board === undefined) throw new Error("board is required");
 
   const checks = [{
-      target: [1,1],      // check middle square against..
-      possibleMatches:[
-        [[1,0],[1,2]],      // -- vertical mid
-        [[0,1],[2,1]],      // -- horizontal mid
-        [[0,0],[2,2]],      // -- diagonal 1
-        [[2,0],[0,2]]       // -- diagonal 2
-      ]
-    },{
-      target: [0,0],      // check top left square against...
-      possibleMatches:[
-        [[0,1],[0,2]],      // -- left side
-        [[1,0],[2,0]]       // -- top side
-      ]
-    },{
-      target: [2,2],      // check bottom right square against...
-      possibleMatches:[
-        [[2,1],[2,0]],      // -- right side
-        [[1,2],[0,2]]       // -- bottom side
-      ]
-    }];
+    target: [1, 1],      // check middle square against..
+    possibleMatches: [
+      [[1, 0], [1, 2]],      // -- vertical mid
+      [[0, 1], [2, 1]],      // -- horizontal mid
+      [[0, 0], [2, 2]],      // -- diagonal 1
+      [[2, 0], [0, 2]]       // -- diagonal 2
+    ]
+  }, {
+    target: [0, 0],      // check top left square against...
+    possibleMatches: [
+      [[0, 1], [0, 2]],      // -- left side
+      [[1, 0], [2, 0]]       // -- top side
+    ]
+  }, {
+    target: [2, 2],      // check bottom right square against...
+    possibleMatches: [
+      [[2, 1], [2, 0]],      // -- right side
+      [[1, 2], [0, 2]]       // -- bottom side
+    ]
+  }];
 
-    for( let check of checks) {
-      let currentPlayer = board[check.target[0]][check.target[1]];
-      if( currentPlayer != null ) {
-        for(let match of check.possibleMatches) {
-          if( board[ match[0][0] ][ match[0][1] ] === currentPlayer && board[ match[1][0] ][ match[1][1] ] === currentPlayer)
-            return currentPlayer;
-        }
-      }
-    }
 
-    // if we get here, no winner has been found
-    return null;
+  for (let check of checks) {
+    const currentPlayer = board[check.target[0]][check.target[1]];
+    if (currentPlayer != null) {
+      for (let match of check.possibleMatches) {
+        if (board[match[0][0]][match[0][1]] === currentPlayer && board[match[1][0]][match[1][1]] === currentPlayer)
+          return currentPlayer;
+      };
+    };
+  };
+
+  /**
+   * NOTES
+   * Cannot use a forEach here as the return doesn't break away half way through... interesting discussion point
+   *  */
+
+
+  // if we get here, no winner has been found
+  return null;
 };
 
 module.exports = {

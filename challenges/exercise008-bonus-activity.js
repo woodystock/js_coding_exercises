@@ -1,7 +1,8 @@
 // Spread Syntax Bonus activity
+const {isString } = require("./helper");
 
 function printColours(colours){
-    if (!colours) throw new Error("colours is required");
+    if (!Array.isArray(colours)) throw new Error("colours (as array) is required");
     
     console.log(...colours);
 
@@ -9,20 +10,20 @@ function printColours(colours){
 }
 
 function shoppingList(list, newItem){
-    if (!list) throw new Error("list is required");
-    if (!newItem) throw new Error("newItem is required");
+    if (!Array.isArray(list)) throw new Error("list is required");
+    if (!Array.isArray(newItem)) throw new Error("newItem is required");
     
     return [...list, ...newItem];
 }
 
 function highestNumber(numbers){
-    if (!numbers) throw new Error("numbers are required");
+    if (!Array.isArray(numbers)) throw new Error("numbers are required");
     
     return Math.max(...numbers);
 }
 
 function splitThatString(string){
-    if (!string) throw new Error("string is required");
+    if (! isString(string)) throw new Error("string is required");
     
     return [...string];
 }

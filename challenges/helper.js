@@ -1,13 +1,12 @@
-
-
 const isString = value => {
     return typeof value === 'string' || value instanceof String
 };
 
 
-const sumReducer = (previousValue, currentValue) => previousValue + currentValue;
+const sum = (a, b) => a + b;
+
 
 module.exports = {
     isString,
-    sumReducer
+    sum
 };

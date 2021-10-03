@@ -13,7 +13,7 @@ function camelCaseWords(words) {
   let camelCased = words.shift();
 
 
-  words.forEach( word => {
+  words.forEach(word => {
     camelCased += capitalize(word); // reuse code from exercise001 in case of refactoring
   });
 
@@ -35,10 +35,10 @@ function checkIngredients(menu, ingredient) {
   if (menu == undefined) throw new Error("menu is required");
   if (!isString(ingredient)) throw new Error("ingredient (as string) is required");
 
-  menu.forEach( item => {                                             // iterate through each item
+  for(let item of menu ) {                                             // iterate through each item
     if (item.ingredients !== undefined)                                // make sure we avoid any reference errors
       if (item.ingredients.indexOf(ingredient) != -1) return true;     // if we find the ingredient at any time, return
-  });
+  };
 
   return false;                                                       // we made it through the menu without finding the ingredient... return false
 }
@@ -49,7 +49,7 @@ function duplicateNumbers(arr1, arr2) {
 
   let duplicates = [];
 
-  arr1.forEach( value => {
+  arr1.forEach(value => {
     if (duplicates.indexOf(value) == -1 && arr2.indexOf(value) != -1)    // if its not already in duplicates and it is in the 2nd array 
       duplicates.push(value);                                           // push it into the duplicates
   });

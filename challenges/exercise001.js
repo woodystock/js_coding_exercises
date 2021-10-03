@@ -1,4 +1,4 @@
-const { isString, sumReducer } = require("./helper");
+const { isString, sum } = require("./helper");
 
 function capitalize(word) {
   if (!isString(word)) throw new Error("word (as string) is required");
@@ -98,7 +98,7 @@ function countLinuxUsers(users) {
 
   let linuxCount = 0;
 
-  users.forEach( user => {                                    // iterate through each user
+  users.forEach(user => {                                    // iterate through each user
     if (user?.type === OS_TYPE.LINUX) linuxCount++;         // increment upon finding a linux user
   });
 
@@ -108,7 +108,7 @@ function countLinuxUsers(users) {
 function getMeanScore(scores) {
   if (!Array.isArray(scores)) throw new Error("scores (as Array) is required");
 
-  const mean = (scores.length > 0) ? scores.reduce(sumReducer) / scores.length : 0;  //sumReducer found in helper.js
+  const mean = (scores.length > 0) ? scores.reduce(sum) / scores.length : 0;  //sum found in helper.js
 
   return Math.round(mean * 100) / 100;     // average and round to 2 dp
 }
