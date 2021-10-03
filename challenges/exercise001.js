@@ -1,7 +1,7 @@
 const { isString, sumReducer } = require("./helper");
 
 function capitalize(word) {
-  if (word === undefined || !isString(word)) throw new Error("word (as string) is required");
+  if (!isString(word)) throw new Error("word (as string) is required");
 
   return word.charAt(0).toUpperCase() + word.slice(1, word.length);     // first char=>upper case, then merge rest of word
 }
@@ -14,8 +14,8 @@ function generateInitials(firstName, lastName) {
 }
 
 function addVAT(originalPrice, vatRate) {
-  if (originalPrice === undefined || isNaN(originalPrice)) throw new Error("originalPrice (as number) is requied");
-  if (vatRate === undefined || isNaN(vatRate)) throw new Error("vatRate (as number) is required");
+  if (isNaN(originalPrice)) throw new Error("originalPrice (as number) is requied");
+  if (isNaN(vatRate)) throw new Error("vatRate (as number) is required");
 
   const priceInPence = originalPrice * 100;                         // convert to pence as that is our lowest possible unit
   const vatMultiplier = vatRate / 100;                              // vatRate to percentage multiplier
@@ -27,8 +27,8 @@ function addVAT(originalPrice, vatRate) {
 }
 
 function getSalePrice(originalPrice, reduction) {
-  if (originalPrice === undefined || isNaN(originalPrice)) throw new Error("originalPrice (as number) is required");
-  if (reduction === undefined || isNaN(reduction)) throw new Error("reduction (as number) is required");
+  if (isNaN(originalPrice)) throw new Error("originalPrice (as number) is required");
+  if (isNaN(reduction)) throw new Error("reduction (as number) is required");
 
   if (reduction < 0) throw new Error("reduction should not be negative. Try profiteer(price, increase)");
 
@@ -63,7 +63,7 @@ function getMiddleCharacter(str) {
   */
 
 
-  if (str === undefined || !isString(str)) throw new Error("str (as string) is required");
+  if (!isString(str)) throw new Error("str (as string) is required");
 
   const midPos = str.length / 2;                            // find the middle position
 
@@ -75,38 +75,38 @@ function getMiddleCharacter(str) {
 }
 
 function reverseWord(word) {
-  if (word === undefined || !isString(word)) throw new Error("word is required");
+  if (!isString(word)) throw new Error("word is required");
 
   return [...word].reverse().join("");
 }
 
 function reverseAllWords(words) {
-  if (words === undefined || !Array.isArray(words)) throw new Error("words (as Array) is required");
+  if (!Array.isArray(words)) throw new Error("words (as Array) is required");
 
   return words.map(word => reverseWord(word));
 }
 
-// "ENUM" to store user OS types
-const OS_TYPE = {
-  WINDOWS: "Windows",             // Classic
-  MAC: "Mac",                     // New Skool
-  LINUX: "Linux"                  // 1337
-}
-
 function countLinuxUsers(users) {
-  if (users === undefined) throw new Error("users is required");
+  if (users == undefined) throw new Error("users is required");
+
+  // "ENUM" to store user OS types
+  const OS_TYPE = {
+    WINDOWS: "Windows",             // Classic
+    MAC: "Mac",                     // New Skool
+    LINUX: "Linux"                  // 1337
+  }
 
   let linuxCount = 0;
 
-  for (let user of users) {                                    // iterate through each user
+  users.forEach( user => {                                    // iterate through each user
     if (user?.type === OS_TYPE.LINUX) linuxCount++;         // increment upon finding a linux user
-  }
+  });
 
   return linuxCount;
 }
 
 function getMeanScore(scores) {
-  if (scores === undefined || !Array.isArray(scores)) throw new Error("scores (as Array) is required");
+  if (!Array.isArray(scores)) throw new Error("scores (as Array) is required");
 
   const mean = (scores.length > 0) ? scores.reduce(sumReducer) / scores.length : 0;  //sumReducer found in helper.js
 
@@ -114,7 +114,7 @@ function getMeanScore(scores) {
 }
 
 function simpleFizzBuzz(n) {
-  if (n === undefined) throw new Error("n is required");
+  if (isNaN(n)) throw new Error("n is required");
 
   let result = "";
 

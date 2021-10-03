@@ -1,6 +1,8 @@
+const { isString } = require("./helper");
+
 function findSmallNums(nums) {
-  if (!nums) throw new Error("nums is required");
-  
+  if (!Array.isArray( nums )) throw new Error("nums (as array) is required");
+
   let result = [];
 
   // for loop
@@ -16,38 +18,38 @@ function findSmallNums(nums) {
   // });
 
   //optimum
-  result = nums.filter( num => num < 1);
+  result = nums.filter(num => num < 1);
 
   return result;
 }
 
 function findNamesBeginningWith(names, char) {
-  if (!names) throw new Error("names is required");
-  if (!char) throw new Error("char is required");
-  
+  if (! Array.isArray( names) ) throw new Error("names (as array) is required");
+  if (! isString(char) ) throw new Error("char (as string) is required");
+
   let result = [];
 
   // for loop
   // for(let i = 0; i < names.length; ++i) {
-  //   if(names[i].startsWith(char))
+  //   if(names[i].toLowerCase().startsWith(char.toLowerCase()))
   //     result.push(names[i]);
   // }
 
   // forEach
   // names.forEach( function(name) {
-  //   if(name.startsWith(char))
+  //   if(name.toLowerCase().startsWith(char.toLowerCase()))
   //     result.push(name);
   // });
 
   // optimum
-  result = names.filter( name => name.startsWith(char));
+  result = names.filter(name => name.toLowerCase().startsWith(char.toLowerCase()));
 
   return result;
 }
 
 function findVerbs(words) {
-  if (!words) throw new Error("words is required");
-  
+  if (! Array.isArray(words)) throw new Error("words (as array) is required");
+
   let result = [];
 
   const VERB_PREFIX = "to "
@@ -71,8 +73,8 @@ function findVerbs(words) {
 }
 
 function getIntegers(nums) {
-  if (!nums) throw new Error("nums is required");
-  
+  if (! Array.isArray(nums)) throw new Error("nums (as array) is required");
+
   let result = [];
 
   // for loop
@@ -94,8 +96,8 @@ function getIntegers(nums) {
 }
 
 function getCities(users) {
-  if (!users) throw new Error("users is required");
-  
+  if (users == undefined) throw new Error("users is required");
+
   let result = [];
 
   // for loop
@@ -105,20 +107,20 @@ function getCities(users) {
   // }
 
   // forEach
-  // users.forEach( function(user) {
-  //   if( (user.data !== undefined) && (user.data.city != undefined))    // make sure it uses lazy comparisons! (Likely)
-  //     result.push(user.data.city.displayName);
-  // });
+  users.forEach( function(user) {
+    if( (user.data !== undefined) && (user.data.city != undefined))    // make sure it uses lazy comparisons! (Likely)
+      result.push(user.data.city.displayName);
+  });
 
-  //optimum
-  result = users.map( user => user.data.city.displayName );
+  //optimum (less safe, so using for each)
+  //result = users.map(user => user.data?.city?.displayName);
 
   return result;
 }
 
 function getSquareRoots(nums) {
-  if (!nums) throw new Error("nums is required");
-  
+  if (!Array.isArray(nums)) throw new Error("nums is required");
+
   let result = [];
 
   // for loop
@@ -134,16 +136,16 @@ function getSquareRoots(nums) {
   // });
 
   // optimum
-  result = nums.map( num => Math.round(Math.sqrt(num) * 100) / 100);
+  result = nums.map(num => Math.round(Math.sqrt(num) * 100) / 100);
 
 
   return result;
 }
 
 function findSentencesContaining(sentences, str) {
-  if (!sentences) throw new Error("sentences is required");
-  if (!str) throw new Error("str is required");
-  
+  if (!Array.isArray(sentences)) throw new Error("sentences is required");
+  if (! isString(str)) throw new Error("str is required");
+
   let result = [];
 
   // for loop
@@ -159,14 +161,14 @@ function findSentencesContaining(sentences, str) {
   // });
 
   //optimum
-  result = sentences.filter( sentence => sentence.toLowerCase().includes(str.toLowerCase()));
+  result = sentences.filter(sentence => sentence.toLowerCase().includes(str.toLowerCase()));
 
   return result;
 }
 
-function getLongestSide(sides){
-  if(!sides) throw new Error("sides is required");
-  
+function getLongestSide(sides) {
+  if (!Array.isArray(sides)) throw new Error("sides is required");
+
   let longest = 0;                                                    // reset longest
 
   // for loop
@@ -182,15 +184,15 @@ function getLongestSide(sides){
   // });
 
   //optimum
-  longest = sides.reduce( (prevSide, currentSide) => currentSide > prevSide ? currentSide : prevSide);
+  longest = Math.max(...sides);
 
   return longest;
 
 }
 
 function getLongestSides(triangles) {
-  if (!triangles) throw new Error("triangles is required");
-  
+  if (!Array.isArray(triangles)) throw new Error("triangles is required");
+
   let result = [];
 
   // for loop
@@ -206,7 +208,7 @@ function getLongestSides(triangles) {
   // });
 
   //optimum
-  result = triangles.map( sides => getLongestSide(sides));
+  result = triangles.map(sides => getLongestSide(sides));
 
   return result;
 }

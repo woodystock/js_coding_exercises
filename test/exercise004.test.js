@@ -29,6 +29,18 @@ describe("findNamesBeginningWith", () => {
     expect(findNamesBeginningWith(names, "D")).toEqual(["Dave"]);
     expect(findNamesBeginningWith(names, "F")).toEqual([]);
   });
+  test("handles multiple chars in the passed char", () => {
+    const names = ["Sally", "Dave", "Susan", "Sadie", "Riley", "Sam"];
+    expect(findNamesBeginningWith(names, "Sa")).toEqual([
+      "Sally",
+      "Sadie",
+      "Sam"
+    ]);
+  });
+  test("isn't case sensitive", () => {
+    const names = ["Sally", "Dave", "Susan", "Sadie", "Riley", "Sam"];
+    expect(findNamesBeginningWith(names, "r")).toEqual(["Riley"]);
+  });
 });
 
 describe("findVerbs", () => {
@@ -109,6 +121,26 @@ describe("getCities", () => {
     ];
     expect(getCities(users)).toEqual(["MCR", "LVP", "LVP", "GLW"]);
   });
+  test("handles no city and no displayName", () => {
+    const users = [
+      {
+        id: 12,
+        data: {
+        }
+      }];
+    expect(getCities(users)).toEqual([]);
+    const users2 = [
+      {
+        id: 44,
+        data: {
+          city: {
+            id: 4
+          }
+        }
+      }];
+    expect(getCities(users)).toEqual([]);
+  });
+
 });
 
 describe("getSquareRoots", () => {

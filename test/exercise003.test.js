@@ -71,6 +71,15 @@ describe("getTotalSubjects", () => {
     ];
     expect(getTotalSubjects(people)).toBe(9);
   });
+
+  test("handles missing subjects", () => {
+    const people = [
+      { name: "Billy", subjects: ["welsh", "spanish"] },
+      { name: "Claude"},
+      { name: "Aneeta", subjects: ["physics", "maths", "computing", "music"] }
+    ];
+    expect(getTotalSubjects(people)).toBe(6);
+  });
 });
 
 describe("checkIngredients", () => {
@@ -97,6 +106,34 @@ describe("checkIngredients", () => {
       {
         name: "hummus",
         ingredients: ["chickpeas", "tahini", "lemon", "garlic", "salt"]
+      }
+    ];
+
+    expect(checkIngredients(menu, "milk")).toBe(false);
+  });
+
+  test("handle objects with missing ingredients", () => {
+    const menu = [
+      {
+        name: "tofu fritters",
+        ingredients: ["tofu", "egg yolk", "breadbrumbs", "paprika"]
+      },
+      {
+        name: "black bean curry",
+        ingredients: ["black beans", "garam masala", "rice"]
+      },
+      {
+        name: "chocolate tiffin",
+        ingredients: [
+          "dark chocolate",
+          "egg",
+          "flour",
+          "brown sugar",
+          "vanilla essence"
+        ]
+      },
+      {
+        name: "hummus",
       }
     ];
 

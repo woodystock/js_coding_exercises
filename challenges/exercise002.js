@@ -1,14 +1,14 @@
 const { isString, regEx_charUntilNumber } = require("./helper");
 
 function getFillings(sandwich) {
-  if (sandwich === undefined) throw new Error("ingredients is required");
+  if (sandwich == undefined) throw new Error("ingredients is required");
 
   // if the sandwhich has no fillings, return an empty array, otherwise return a shallow copy of the array [NB: Is a deep copy required??]
   return sandwich.fillings?.slice(0);
 }
 
 function isFromManchester(person) {
-  if (person === undefined) throw new Error("person is required");
+  if (person == undefined) throw new Error("person is required");
 
   // "ENUM" for locations... consider a database instead, for external editing
   const LOCATIONS = {
@@ -22,7 +22,7 @@ function isFromManchester(person) {
 }
 
 function getBusNumbers(people) {
-  if (people === undefined || isNaN(people)) throw new Error("people (as number) is required");
+  if (isNaN(people)) throw new Error("people (as number) is required");
   if (people < 0) throw new Error("people must be positive");
 
   const MAX_BUS_CAPACITY = 40;
@@ -31,7 +31,7 @@ function getBusNumbers(people) {
 }
 
 function countSheep(arr) {
-  if (arr === undefined || !Array.isArray(arr)) throw new Error("arr (as Array) is required");
+  if (!Array.isArray(arr)) throw new Error("arr (as Array) is required");
 
   // "ENUM" for animals... consider a database instead, for external editing
   const ANIMAL = {
@@ -45,7 +45,7 @@ function countSheep(arr) {
 }
 
 function hasMPostCode(person) {
-  if (person === undefined) throw new Error("person is required");
+  if (person == undefined) throw new Error("person is required");
 
   const regEx_charUntilNumber = /^[^0-9]*/;
 
@@ -53,7 +53,7 @@ function hasMPostCode(person) {
   const city = person.address?.city?.toString().toLowerCase();
   const postCode = person.address?.postCode?.toLowerCase();
 
-  if (postCode === undefined || !isString(postCode))
+  if (!isString(postCode))
     return false; // if there is no post code, they can't have a manchester postcode
 
   const postCodeCity = regEx_charUntilNumber.exec(postCode)
