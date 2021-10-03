@@ -7,8 +7,8 @@ function capitalize(word) {
 }
 
 function generateInitials(firstName, lastName) {
-  if (firstName === undefined || !isString(firstName) || firstName == "") throw new Error("firstName (as string) is required");
-  if (lastName === undefined || !isString(lastName) || lastName == "") throw new Error("lastName (as string) is required")
+  if (!isString(firstName) || firstName == "") throw new Error("firstName (as string) is required");
+  if (!isString(lastName) || lastName == "") throw new Error("lastName (as string) is required")
 
   return firstName.charAt(0).toUpperCase() + "." + lastName.charAt(0).toUpperCase();
 }
