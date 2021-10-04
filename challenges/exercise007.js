@@ -24,9 +24,11 @@ const sumDigits = n => {
 const createRange = (start, end, step = 1, dp = 2) => {
   if (isNaN(start)) throw new Error("start (as number) is required");
   if (isNaN(end)) throw new Error("end is required");
+  if( isNaN(step)) step = 1;
+  if( isNaN(dp)) dp = 2;
 
-  if (start > end) return [];                          // if the start is larger than the end, no range needs to be created
-
+  if(end > start && step <=0 || end < start && step >=0 ) throw new Error("number of steps cannot reach end")
+  
   const range = [];
   for (let i = start; i <= end; i += step) {
     if (Number.isInteger(i)) {
