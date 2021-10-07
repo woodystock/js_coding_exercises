@@ -83,23 +83,16 @@ function reverseWord(word) {
 function reverseAllWords(words) {
   if (!Array.isArray(words)) throw new Error("words (as Array) is required");
 
-  return words.map(word => reverseWord(word));
+  return words.map( reverseWord );
 }
 
 function countLinuxUsers(users) {
   if (users == undefined) throw new Error("users is required");
 
-  // "ENUM" to store user OS types
-  const OS_TYPE = {
-    WINDOWS: "Windows",             // Classic
-    MAC: "Mac",                     // New Skool
-    LINUX: "Linux"                  // 1337
-  }
-
   let linuxCount = 0;
 
   users.forEach(user => {                                    // iterate through each user
-    if (user?.type === OS_TYPE.LINUX) linuxCount++;         // increment upon finding a linux user
+    if (user?.type === "Linux") linuxCount++;         // increment upon finding a linux user
   });
 
   return linuxCount;
