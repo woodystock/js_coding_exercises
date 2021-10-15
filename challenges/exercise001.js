@@ -66,9 +66,7 @@ function countLinuxUsers(users) {
 function getMeanScore(scores) {
   if (!Array.isArray(scores)) throw new Error("scores (as Array) is required");
 
-  const mean = (scores.length > 0) ? scores.reduce(sum) / scores.length : 0;  //sum found in helper.js
-
-  return Math.round(mean * 100) / 100;     // average and round to 2 dp
+  return scores.length > 0 ? Math.round(scores.reduce(sum) / scores.length * 100) / 100 : 0;     // average and round to 2 dp
 }
 
 function simpleFizzBuzz(n) {
