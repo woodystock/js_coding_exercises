@@ -23,21 +23,14 @@ function checkIngredients(menu, ingredient) {
   if (menu == undefined) throw new Error("menu is required");
   if (!isString(ingredient)) throw new Error("ingredient (as string) is required");
 
- return  menu.some(item => item?.ingredients?.includes(ingredient))
+ return menu.some(item => item?.ingredients?.includes(ingredient))
 }
 
 function duplicateNumbers(arr1, arr2) {
   if (!Array.isArray(arr1)) throw new Error("arr1 (as array) is required");
   if (!Array.isArray(arr2)) throw new Error("arr2 (as array) is required");
 
-  let duplicates = [];
-
-  arr1.forEach(value => {
-    if (duplicates.indexOf(value) == -1 && arr2.indexOf(value) != -1)    // if its not already in duplicates and it is in the 2nd array 
-      duplicates.push(value);                                           // push it into the duplicates
-  });
-
-  return duplicates.sort();
+  return arr1.filter( (item,pos) => arr2.includes(item) && arr1.indexOf(item) == pos).sort();
 }
 
 module.exports = {
