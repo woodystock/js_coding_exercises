@@ -128,7 +128,7 @@ describe("getCities", () => {
         data: {
         }
       }];
-    expect(getCities(users)).toEqual([]);
+    expect(getCities(users)).toEqual([""]);
     const users2 = [
       {
         id: 44,
@@ -138,7 +138,7 @@ describe("getCities", () => {
           }
         }
       }];
-    expect(getCities(users)).toEqual([]);
+    expect(getCities(users)).toEqual([""]);
   });
 
 });

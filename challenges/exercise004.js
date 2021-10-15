@@ -16,43 +16,43 @@ function findNamesBeginningWith(names, char) {
 function findVerbs(words) {
   if (!Array.isArray(words)) throw new Error("words (as array) is required");
 
-  return words.filter(word => word.startsWith("to "));;
+  return words.filter(word => word.startsWith("to "));
 }
 
 function getIntegers(nums) {
   if (!Array.isArray(nums)) throw new Error("nums (as array) is required");
 
-  return nums.filter( Number.isInteger );;
+  return nums.filter( Number.isInteger );
 }
 
 function getCities(users) {
   if (users == undefined) throw new Error("users is required");
 
-  return users.map(user => user.data?.city?.displayName);
+  return users.map(user => user.data?.city?.displayName || "");
 }
 
 function getSquareRoots(nums) {
-  if (!Array.isArray(nums)) throw new Error("nums is required");
+  if (!Array.isArray(nums)) throw new Error("nums (as array) is required");
 
-  return nums.map(num => Math.round(Math.sqrt(num) * 100) / 100);;
+  return nums.map(num => Math.round(Math.sqrt(num) * 100) / 100);
 }
 
 function findSentencesContaining(sentences, str) {
-  if (!Array.isArray(sentences)) throw new Error("sentences is required");
-  if (!isString(str)) throw new Error("str is required");
+  if (!Array.isArray(sentences)) throw new Error("sentences (as array) is required");
+  if (!isString(str)) throw new Error("str (as string) is required");
 
-  return sentences.filter(sentence => sentence.toLowerCase().includes(str.toLowerCase()));;
+  return sentences.filter(sentence => sentence.toLowerCase().includes(str.toLowerCase()));
 }
 
 function getLongestSide(sides) {
-  if (!Array.isArray(sides)) throw new Error("sides is required");
+  if (!Array.isArray(sides)) throw new Error("sides (as array) is required");
 
-  return Math.max(...sides);;
+  return Math.max(...sides);
 
 }
 
 function getLongestSides(triangles) {
-  if (!Array.isArray(triangles)) throw new Error("triangles is required");
+  if (!Array.isArray(triangles)) throw new Error("triangles (as array) is required");
 
   return triangles.map( getLongestSide );
 }
