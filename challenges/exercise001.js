@@ -3,7 +3,7 @@ const { isString, sum } = require("./helper");
 function capitalize(word) {
   if (!isString(word)) throw new Error("word (as string) is required");
 
-  return word.charAt(0).toUpperCase() + word.slice(1, word.length);     // first char=>upper case, then merge rest of word
+  return word.charAt(0).toUpperCase() + word.slice(1);     // first char=>upper case, then merge rest of word
 }
 
 function generateInitials(firstName, lastName) {
