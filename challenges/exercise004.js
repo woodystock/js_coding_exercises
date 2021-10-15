@@ -3,7 +3,7 @@ const { isString } = require("./helper");
 function findSmallNums(nums) {
   if (!Array.isArray(nums)) throw new Error("nums (as array) is required");
   
-  return nums.filter(num => num < 1);;
+  return nums.filter(num => num < 1);
 }
 
 function findNamesBeginningWith(names, char) {

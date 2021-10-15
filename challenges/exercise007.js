@@ -6,9 +6,9 @@ const { sum, isString } = require("./helper");
 const sumDigits = n => {
   if (isNaN(n)) throw new Error("n (as number) is required");
 
-  const numChars = [...Math.abs(n).toString()];           // convert number to string (ignoring negative value)
-
-  return numChars.map(Number).reduce(sum);
+  return [...Math.abs(n).toString()]
+  .map(Number)
+  .reduce(sum);
 };
 
 /**
@@ -72,30 +72,16 @@ const createRange = (start, end, step = 1, dp = 2) => {
 const getScreentimeAlertList = (users, date) => {
   if (users === undefined) throw new Error("users is required");
 
-  const regEx_dateFormat = /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/;
+  if (isString(date) && !date.match(RegExp(/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/))) throw new Error("valid date (YYYY-MM-DD) is required");
 
-  if (isString(date) && !date.match(regEx_dateFormat)) throw new Error("valid date (YYYY-MM-DD) is required");
+  return users.reduce( (usernames,user) => {
 
+    const recordsForDate = user.screenTime.filter( record => record.date == date)
+    const totalUsage = recordsForDate.reduce((totalUsage, record) => totalUsage + Object.values(record.usage).reduce(sum),0);
 
-  const alertUsers = [];
-
-  users.forEach(user => {
-    user.screenTime?.forEach(record => {
-      if (record.date === date) {
-        let totalUsage = 0;
-        if ("usage" in record) {
-          for (let property in record.usage) {
-            totalUsage += record.usage[property];
-          }
-          if (totalUsage > 100) {
-            alertUsers.push(user.username);
-          }
-        }
-      }
-    });
-  });
-
-  return alertUsers;
+    if (totalUsage > 100) usernames.push(user.username);
+    return usernames;
+  },[]);
 };
 
 /**
@@ -135,32 +121,32 @@ const findWinner = board => {
   if (board === undefined) throw new Error("board is required");
 
   const checks = [{
-    target: [1, 1],      // check middle square against..
-    possibleMatches: [
-      [[1, 0], [1, 2]],      // -- vertical mid
-      [[0, 1], [2, 1]],      // -- horizontal mid
-      [[0, 0], [2, 2]],      // -- diagonal 1
-      [[2, 0], [0, 2]]       // -- diagonal 2
-    ]
+    target: [1, 1],
+    possibleMatches: {
+      vertMid: [[1, 0], [1, 2]],
+      horizMid: [[0, 1], [2, 1]],
+      diagR: [[0, 0], [2, 2]],
+      diagL: [[2, 0], [0, 2]]
+    }
   }, {
-    target: [0, 0],      // check top left square against...
-    possibleMatches: [
-      [[0, 1], [0, 2]],      // -- left side
-      [[1, 0], [2, 0]]       // -- top side
-    ]
+    target: [0, 0],
+    possibleMatches: {
+      left:[[0, 1], [0, 2]],
+      right:[[1, 0], [2, 0]]
+    }
   }, {
-    target: [2, 2],      // check bottom right square against...
-    possibleMatches: [
-      [[2, 1], [2, 0]],      // -- right side
-      [[1, 2], [0, 2]]       // -- bottom side
-    ]
+    target: [2, 2],
+    possibleMatches: {
+      right: [[2, 1], [2, 0]],
+      bottom: [[1, 2], [0, 2]]
+    }
   }];
 
 
-  for (let check of checks) {
+  for (const check of checks) {
     const currentPlayer = board[check.target[0]][check.target[1]];
     if (currentPlayer != null) {
-      for (let match of check.possibleMatches) {
+      for (const match of Object.values(check.possibleMatches)) {
         if (board[match[0][0]][match[0][1]] === currentPlayer && board[match[1][0]][match[1][1]] === currentPlayer)
           return currentPlayer;
       };
