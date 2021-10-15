@@ -78,10 +78,6 @@ const createMatrix = (n, fillContent) => {
   if (fillContent === undefined) throw new Error("fill is required");
   if (!n > 0) throw new Error("n must be positive and not 0")
 
-  // 1. create a new array of size n...
-  // 2. fill it with new arrays of size n... 
-  // 3. that are filled with the param 'fillContent' (renamed for readability)
-  //        1          2             3
   return Array(n).fill(Array(n).fill(fillContent));
 };
 

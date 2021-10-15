@@ -74,7 +74,6 @@ const getWordFrequencies = str => {
 
   const regEx_removeSpecialChars = /[^a-zA-Z ]/g;
 
-
   // change to lowercase (for case sensitivity) and remove all punctuation with RegEx 
   const cleanStr = str.toLowerCase().replace(regEx_removeSpecialChars, "");
 
@@ -83,7 +82,6 @@ const getWordFrequencies = str => {
 
   const frequencies = {};
 
-  // loop through those words
   words.forEach(word => {
     word in frequencies ? ++frequencies[word] : frequencies[word] = 1;
   });

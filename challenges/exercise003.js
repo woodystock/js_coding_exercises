@@ -10,13 +10,16 @@ function getSquares(nums) {
 function camelCaseWords(words) {
   if (!Array.isArray(words)) throw new Error("words (as Array) is required");
 
-  let camelCased = words.shift();
+  let camelCased = "";
+
+  if( words.length > 0 ){
+    camelCased = words.shift();
 
 
-  words.forEach(word => {
-    camelCased += capitalize(word); // reuse code from exercise001 in case of refactoring
-  });
-
+    words.forEach(word => {
+      camelCased += capitalize(word); // reuse code from exercise001 in case of refactoring
+    });
+  }
   return camelCased;
 }
 

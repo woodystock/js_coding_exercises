@@ -8,9 +8,7 @@ const sumDigits = n => {
 
   const numChars = [...Math.abs(n).toString()];           // convert number to string (ignoring negative value)
 
-  const nums = numChars.map(Number);                    // convert each char back to a number
-
-  return nums.reduce(sum);                              // add the contents of the array
+  return numChars.map(Number).reduce(sum);
 };
 
 /**
@@ -168,11 +166,6 @@ const findWinner = board => {
       };
     };
   };
-
-  /**
-   * NOTES
-   * Cannot use a forEach here as the return doesn't break away half way through... interesting discussion point
-   *  */
 
 
   // if we get here, no winner has been found

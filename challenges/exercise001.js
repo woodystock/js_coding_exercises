@@ -16,62 +16,33 @@ function generateInitials(firstName, lastName) {
 function addVAT(originalPrice, vatRate) {
   if (isNaN(originalPrice)) throw new Error("originalPrice (as number) is requied");
   if (isNaN(vatRate)) throw new Error("vatRate (as number) is required");
+  if (vatRate < 0) throw new Error("vatRate should not be negative.");
 
-  const priceInPence = originalPrice * 100;                         // convert to pence as that is our lowest possible unit
-  const vatMultiplier = vatRate / 100;                              // vatRate to percentage multiplier
-  const vatCost = priceInPence * vatMultiplier;
-  const vatPrice = Math.round(priceInPence + vatCost);              // calc the added vat, rounding to nearest penny
 
-  return vatPrice / 100;                                          // convert back to original pound format ( max 2 dp as vatPrice is an int )
+  const priceInPence = originalPrice * 100;
+  const vatCost = priceInPence * (vatRate / 100);
+
+  return Math.round(priceInPence + vatCost) / 100
 
 }
 
 function getSalePrice(originalPrice, reduction) {
   if (isNaN(originalPrice)) throw new Error("originalPrice (as number) is required");
   if (isNaN(reduction)) throw new Error("reduction (as number) is required");
-
-  if (reduction < 0) throw new Error("reduction should not be negative. Try profiteer(price, increase)");
+  if (reduction < 0) throw new Error("reduction should not be negative.");
 
   const priceInPence = originalPrice * 100;                         // convert to pence as that is our lowest possible unit
   const reductionValue = priceInPence * (reduction / 100);
-  const reducedPrice = Math.round(priceInPence - reductionValue);   // calc the reduction amount, rounding to nearest penny
 
-  return reducedPrice / 100;                                      // convert back to original pound format ( max 2 dp as reducedPrice is an int )
+  return Math.round(priceInPence - reductionValue) / 100;                                      // convert back to original pound format ( max 2 dp as reducedPrice is an int )
 }
 
 function getMiddleCharacter(str) {
-
-  /**
-  * If the word has even length, the mid point will be an integer therefore the previous integer will
-  * be mid - 1 and the next integar will be mid + 1 giving us a range of 2.
-  * 
-  * If the word has odd length, the mid point will have a suffix .5, the previous integer will be mid - .5 and
-  * the next integer will be mid + .5 giving us a range of 1.
-  * 
-  * e.g.
-  * IF word length = 4
-  * mid = 2
-  * prev = 1
-  * next = 3
-  * range = 2
-  * 
-  * IF word length = 5
-  * mid = 2.5
-  * prev = 2
-  * next = 3
-  * range = 1
-  */
-
-
   if (!isString(str)) throw new Error("str (as string) is required");
 
-  const midPos = str.length / 2;                            // find the middle position
+  const midPos = str.length / 2;
 
-  const bottomLimit = Math.floor(midPos - 0.5);           // calc previous integer (simplified as we can be sure of the input)        
-  const topLimit = Math.floor(midPos + 1);                // calc next integer (simplified as we can be sure of the input) 
-
-
-  return str.slice(bottomLimit, topLimit);               // return only the middle section
+  return str.slice(Math.floor(midPos - 0.5), Math.floor(midPos + 1));
 }
 
 function reverseWord(word) {
@@ -89,13 +60,7 @@ function reverseAllWords(words) {
 function countLinuxUsers(users) {
   if (users == undefined) throw new Error("users is required");
 
-  let linuxCount = 0;
-
-  users.forEach(user => {                                    // iterate through each user
-    if (user?.type === "Linux") linuxCount++;         // increment upon finding a linux user
-  });
-
-  return linuxCount;
+  return users.reduce( (prevCount, user) => prevCount + (user?.type === "Linux"),0);
 }
 
 function getMeanScore(scores) {
