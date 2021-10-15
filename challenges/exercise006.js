@@ -9,9 +9,7 @@ const { sum, isString } = require("./helper");
 const sumMultiples = arr => {
   if (!Array.isArray(arr)) throw new Error("arr (as array) is required");
 
-  const multiples3and5 = arr.filter(num => !(num % 3) || !(num % 5));
-
-  return multiples3and5.reduce(sum);
+  return arr.filter(num => !(num % 3) || !(num % 5)).reduce(sum);
 };
 
 /**
@@ -22,9 +20,7 @@ const sumMultiples = arr => {
 const isValidDNA = str => {
   if (!isString(str)) throw new Error("str (as string) is required");
 
-  const regEx_DNAFormat = /(?![ACGT])./g;
-
-  return str !== "" && str.match(regEx_DNAFormat) === null;
+  return str !== "" && str.match(RegExp(/(?![ACGT])./g)) === null;
 };
 
 /**
@@ -97,17 +93,7 @@ const areWeCovered = (staff, day) => {
   if (!Array.isArray(staff)) throw new Error("staff (as array) is required");
   if (!isString(day)) throw new Error("day is required");
 
-  if (staff.length < 3) return false;         // impossible to pass with less than 3 staff
-
-  let staffCount = 0;
-
-  staff.forEach(employee => {                  // loop through the employees
-    if ("rota" in employee)                      // avoid any possible reference errors
-      if (employee.rota.indexOf(day) != -1)     // as it is a search, we cannot use optional chainging ('undefined' != -1 would equal true)
-        ++staffCount;
-  });
-
-  return staffCount > 2;
+  return staff.length > 2 && staff.reduce((staffCount, employee) => staffCount + (employee?.rota?.includes(day) || 0),0) > 2;
 };
 
 module.exports = {
